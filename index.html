@@ -1214,7 +1214,10 @@ select.fld{cursor:pointer}
         <div><label class="lbl">Weight (kg)</label><input type="number" class="fld" id="wVal" placeholder="e.g. 65.5" step="0.1"></div>
       </div>
       <div style="margin-bottom:12px"><label class="lbl">Note (optional)</label><input type="text" class="fld" id="wNote" placeholder="e.g. Feeling great this week!"></div>
-      <button class="btn bp bsm" onclick="logWeight()">+ Log Weight</button>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn bp bsm" onclick="logWeight()" id="wLogBtn">+ Log Weight</button>
+        <button class="btn bs bsm" onclick="cancelEditWeight()" id="wCancelEdit" style="display:none">✕ Cancel Edit</button>
+      </div>
     </div>
 
     <div class="card">
@@ -1979,29 +1982,97 @@ function resetFast(){
 
 // ══ WEIGHT LOG ══
 let weightLog=[];
-// Set default date
+let editingWeightIdx = null; // track which entry is being edited
 document.getElementById('wDate').valueAsDate=new Date();
+
 function logWeight(){
   const d=document.getElementById('wDate').value;
   const v=parseFloat(document.getElementById('wVal').value);
   const n=document.getElementById('wNote').value;
   if(!d||isNaN(v)){toast('Please enter date and weight! 🌸');return;}
-  weightLog.push({date:d,val:v,note:n});
+
+  if(editingWeightIdx !== null){
+    // UPDATE existing entry
+    weightLog[editingWeightIdx] = {date:d, val:v, note:n};
+    editingWeightIdx = null;
+    document.getElementById('wLogBtn').textContent = '+ Log Weight';
+    document.getElementById('wCancelEdit').style.display = 'none';
+    toast('✏️ Entry updated! 🌸');
+  } else {
+    // ADD new entry
+    weightLog.push({date:d, val:v, note:n});
+    toast('⚖️ Weight logged! Keep going! 🌸');
+  }
+
   weightLog.sort((a,b)=>a.date>b.date?1:-1);
   document.getElementById('wVal').value='';
   document.getElementById('wNote').value='';
+  document.getElementById('wDate').valueAsDate=new Date();
   renderWeightHistory();
   drawWeightChart();
-  toast('⚖️ Weight logged! Keep going! 🌸');
+  saveState();
 }
+
+function editWeight(idx){
+  // idx is from reversed array, convert to real index
+  const realIdx = weightLog.length - 1 - idx;
+  editingWeightIdx = realIdx;
+  const e = weightLog[realIdx];
+  document.getElementById('wDate').value = e.date;
+  document.getElementById('wVal').value = e.val;
+  document.getElementById('wNote').value = e.note || '';
+  document.getElementById('wLogBtn').textContent = '💾 Save Changes';
+  document.getElementById('wCancelEdit').style.display = 'inline-block';
+  // Scroll to form
+  document.getElementById('wDate').scrollIntoView({behavior:'smooth', block:'center'});
+  toast('✏️ Editing entry — make your changes above 🌸');
+}
+
+function cancelEditWeight(){
+  editingWeightIdx = null;
+  document.getElementById('wDate').valueAsDate = new Date();
+  document.getElementById('wVal').value = '';
+  document.getElementById('wNote').value = '';
+  document.getElementById('wLogBtn').textContent = '+ Log Weight';
+  document.getElementById('wCancelEdit').style.display = 'none';
+}
+
+function deleteWeight(idx){
+  const realIdx = weightLog.length - 1 - idx;
+  const entry = weightLog[realIdx];
+  if(confirm(`Delete entry: ${entry.date} — ${entry.val} kg?`)){
+    weightLog.splice(realIdx, 1);
+    renderWeightHistory();
+    drawWeightChart();
+    saveState();
+    toast('🗑 Entry deleted 🌸');
+  }
+}
+
 function renderWeightHistory(){
   const el=document.getElementById('weightHistory');
-  if(!weightLog.length){el.innerHTML='<div style="font-size:.83rem;color:var(--light);text-align:center;padding:16px">No entries yet 🌸</div>';return;}
-  el.innerHTML=weightLog.slice().reverse().map((e,i,arr)=>{
-    const prev=arr[i+1];
-    let diff='';
-    if(prev){const d=(e.val-prev.val).toFixed(1);diff=`<span class="we-diff ${d<=0?'diff-dn':'diff-up'}">${d<=0?'▼':'▲'} ${Math.abs(d)} kg</span>`;}
-    return `<div class="weight-entry"><span class="we-date">📅 ${e.date}${e.note?'  ·  '+e.note:''}</span>${diff}<span class="we-val">${e.val} kg</span></div>`;
+  if(!weightLog.length){
+    el.innerHTML='<div style="font-size:.83rem;color:var(--light);text-align:center;padding:16px">No entries yet 🌸</div>';
+    return;
+  }
+  const reversed = weightLog.slice().reverse();
+  el.innerHTML = reversed.map((e, i) => {
+    const prev = reversed[i+1];
+    let diff = '';
+    if(prev){
+      const d = (e.val - prev.val).toFixed(1);
+      diff = `<span class="we-diff ${d<=0?'diff-dn':'diff-up'}">${d<=0?'▼':'▲'} ${Math.abs(d)} kg</span>`;
+    }
+    return `
+    <div class="weight-entry">
+      <span class="we-date">📅 ${e.date}${e.note ? '  ·  <em style="color:#bbb">'+e.note+'</em>' : ''}</span>
+      ${diff}
+      <span class="we-val">${e.val} kg</span>
+      <div style="display:flex;gap:5px;margin-left:6px">
+        <button onclick="editWeight(${i})" style="padding:3px 9px;border-radius:8px;border:1.5px solid var(--p200);background:var(--petal);color:var(--p500);font-size:.7rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">✏️</button>
+        <button onclick="deleteWeight(${i})" style="padding:3px 9px;border-radius:8px;border:1.5px solid #fecaca;background:#fff5f5;color:#ef4444;font-size:.7rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">🗑</button>
+      </div>
+    </div>`;
   }).join('');
 }
 function drawWeightChart(){
