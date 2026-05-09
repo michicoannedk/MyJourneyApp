@@ -1,0 +1,2633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Journey 🌸</title>
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f9a8d4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="My Journey">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+<!-- Fonts with offline fallback -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Offline font fallbacks */
+  body { font-family: 'Nunito', 'Helvetica Neue', Arial, sans-serif; }
+  .sh, .ct, .rec-title, .ph-name, .va-phase-title, .profile-name-display, .fast-t, .gm-num, .pstat-val, .bmi-num {
+    font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  }
+  /* Install banner */
+  #installBanner {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+    background: linear-gradient(135deg, #f9a8d4, #f472b6);
+    padding: 14px 18px; color: white;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 -4px 20px rgba(244,114,182,.35);
+    animation: slideUp .4s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  #installBanner.hidden { display: none !important; }
+  .install-txt { font-size: .84rem; font-weight: 700; }
+  .install-sub { font-size: .72rem; opacity: .85; margin-top: 1px; }
+  .install-btns { display: flex; gap: 8px; }
+  .ibtn { padding: 7px 15px; border-radius: 20px; border: none; cursor: pointer;
+    font-size: .78rem; font-weight: 700; font-family: 'Nunito', sans-serif; }
+  .ibtn-yes { background: white; color: #e8386d; }
+  .ibtn-no  { background: rgba(255,255,255,.2); color: white; }
+  /* Offline indicator */
+  #offlineBadge {
+    display: none; position: fixed; top: 65px; right: 12px; z-index: 400;
+    background: #fbbf24; color: #92400e; padding: 4px 12px; border-radius: 20px;
+    font-size: .72rem; font-weight: 800; box-shadow: 0 2px 10px rgba(0,0,0,.15);
+  }
+</style>
+<style>
+:root{
+  --p50:#fff0f6;--p100:#ffe0ed;--p200:#ffb3ce;--p300:#ff80af;--p400:#f9548a;--p500:#e8386d;
+  --blush:#fbcfe8;--petal:#fce7f3;--soft:#fdf2f8;
+  --sage-lt:#dcfce7;--sage:#86efac;--sage-dk:#15803d;
+  --sky-lt:#e0f2fe;--sky:#7dd3fc;--sky-dk:#0369a1;
+  --gold-lt:#fef3c7;--gold:#fbbf24;--gold-dk:#92400e;
+  --lav-lt:#f3e8ff;--lav:#c4b5fd;--lav-dk:#6d28d9;
+  --dark:#3b0d22;--mid:#8b3a5e;--light:#c06090;
+  --card:#ffffff;--sh:0 2px 20px rgba(244,114,182,.1);--sh-md:0 6px 32px rgba(244,114,182,.18);
+  --r:18px;--rsm:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--soft);color:var(--dark);min-height:100vh;
+  background-image:radial-gradient(circle at 8% 15%,rgba(255,180,210,.15) 0%,transparent 38%),
+  radial-gradient(circle at 92% 85%,rgba(252,207,232,.2) 0%,transparent 38%);}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:300;
+  background:linear-gradient(135deg,#f9a8d4 0%,#fbcfe8 55%,#fce7f3 100%);
+  border-bottom:1.5px solid rgba(255,255,255,.8);box-shadow:0 2px 20px rgba(244,114,182,.22);
+  padding:0 15px;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--dark);
+  display:flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0}
+.nav-tabs{display:flex;gap:4px;overflow-x:auto;padding:3px 0;scrollbar-width:none;margin-left:10px}
+.nav-tabs::-webkit-scrollbar{display:none}
+.ntab{background:rgba(255,255,255,.45);border:1.5px solid rgba(255,255,255,.9);color:var(--mid);
+  padding:5px 11px;border-radius:22px;cursor:pointer;font-size:.74rem;font-family:'Nunito',sans-serif;
+  font-weight:700;transition:all .2s;white-space:nowrap;}
+.ntab:hover,.ntab.active{background:#fff;color:var(--p500);box-shadow:0 3px 12px rgba(244,114,182,.28);border-color:#fff;}
+
+/* LAYOUT */
+.sec{display:none;animation:fu .35s ease}.sec.active{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.pw{max-width:940px;margin:0 auto;padding:24px 14px 90px}
+.sh{font-family:'Cormorant Garamond',serif;font-size:1.85rem;font-weight:700;color:var(--dark);margin-bottom:4px}
+.ss{color:var(--light);font-size:.86rem;margin-bottom:22px}
+
+/* CARD */
+.card{background:var(--card);border-radius:var(--r);padding:20px 22px;box-shadow:var(--sh);
+  margin-bottom:18px;border:1.5px solid rgba(252,207,232,.5);}
+.ct{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--dark);margin-bottom:13px;
+  font-weight:600;display:flex;align-items:center;gap:8px;}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px}
+@media(max-width:640px){.g2,.g3{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.g2{grid-template-columns:1fr}}
+
+/* BADGES */
+.bdg{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em}
+.bpk{background:var(--petal);color:var(--p500)}.bsg{background:var(--sage-lt);color:var(--sage-dk)}
+.bsk{background:var(--sky-lt);color:var(--sky-dk)}.bgd{background:var(--gold-lt);color:var(--gold-dk)}
+.blv{background:var(--lav-lt);color:var(--lav-dk)}
+
+/* BUTTONS */
+.btn{padding:9px 20px;border-radius:26px;border:none;cursor:pointer;font-size:.83rem;
+  font-weight:700;font-family:'Nunito',sans-serif;transition:all .2s;}
+.btn:hover{transform:translateY(-2px)}
+.bp{background:linear-gradient(135deg,#f9a8d4,#f472b6);color:#fff;box-shadow:0 4px 14px rgba(244,114,182,.38);}
+.bs{background:var(--petal);color:var(--p500)}.bgo{background:var(--sage-lt);color:var(--sage-dk)}
+.bsm{padding:5px 13px;font-size:.75rem}
+
+/* INPUTS */
+.fld{width:100%;padding:9px 13px;border-radius:var(--rsm);border:1.5px solid var(--p200);
+  background:var(--petal);font-family:'Nunito',sans-serif;font-size:.87rem;color:var(--dark);
+  outline:none;transition:border .2s;}
+.fld:focus{border-color:var(--p400);background:#fff}
+.lbl{display:block;font-size:.77rem;font-weight:700;color:var(--mid);margin-bottom:4px}
+
+/* SELECT */
+select.fld{cursor:pointer}
+
+/* PROGRESS BAR */
+.pb{background:var(--p100);border-radius:30px;height:8px;overflow:hidden;margin-top:6px}
+.pf{height:100%;border-radius:30px;background:linear-gradient(90deg,#f9a8d4,#f472b6);
+  transition:width .6s cubic-bezier(.34,1.56,.64,1);}
+
+/* NOTE BOX */
+.nb{background:var(--petal);border-left:3px solid var(--p400);border-radius:0 10px 10px 0;
+  padding:10px 13px;font-size:.78rem;color:var(--mid);margin-bottom:12px}
+
+/* INNER TABS */
+.itabs{display:flex;gap:5px;margin-bottom:17px;flex-wrap:wrap}
+.itab{padding:6px 14px;border-radius:20px;border:1.5px solid var(--p200);background:#fff;
+  color:var(--mid);font-size:.76rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;}
+.itab.active,.itab:hover{background:linear-gradient(135deg,#f9a8d4,#f472b6);color:#fff;border-color:transparent;}
+.isec{display:none}.isec.active{display:block}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(90px);
+  background:linear-gradient(135deg,#f9a8d4,#f472b6);color:#fff;
+  padding:9px 24px;border-radius:30px;font-size:.83rem;font-weight:700;
+  box-shadow:0 6px 24px rgba(244,114,182,.45);z-index:999;
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ══ PROFILE BOX ══ */
+.profile-hero{background:linear-gradient(135deg,#fdf2f8,#fff);border:2px solid var(--blush);
+  border-radius:var(--r);padding:22px;margin-bottom:20px;box-shadow:var(--sh-md);}
+.profile-avatar{width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(135deg,#f9a8d4,#f472b6);
+  display:flex;align-items:center;justify-content:center;font-size:2rem;
+  box-shadow:0 4px 16px rgba(244,114,182,.35);flex-shrink:0;overflow:hidden;}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.profile-top{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.profile-greeting{flex:1}
+.profile-name-display{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--dark)}
+.profile-tagline{font-size:.8rem;color:var(--light);margin-top:2px}
+.profile-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.pstat{background:#fff;border-radius:12px;padding:11px 8px;text-align:center;
+  border:1.5px solid var(--p100);box-shadow:0 1px 8px rgba(244,114,182,.08);}
+.pstat-val{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--p500);line-height:1}
+.pstat-lbl{font-size:.67rem;color:var(--light);margin-top:3px;font-weight:600}
+.pstat-unit{font-size:.7rem;color:var(--light)}
+.bmi-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800}
+.bmi-normal{background:#dcfce7;color:var(--sage-dk)}
+.bmi-over{background:#fef3c7;color:var(--gold-dk)}
+.bmi-obese{background:#fee2e2;color:#b91c1c}
+.bmi-under{background:var(--sky-lt);color:var(--sky-dk)}
+.profile-form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:600px){.profile-form-grid{grid-template-columns:1fr 1fr}.profile-stats-row{grid-template-columns:1fr 1fr}}
+.edit-toggle{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.profile-form{display:none}.profile-form.open{display:block}
+
+/* ══ GOAL MAP ══ */
+.gm-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.gm-stat{background:#fff;border-radius:14px;padding:14px;text-align:center;
+  border:1.5px solid var(--p100);box-shadow:var(--sh);}
+.gm-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--p500)}
+.gm-lbl{font-size:.72rem;color:var(--light);margin-top:1px}
+.gmap{position:relative}
+.gmap-line{position:absolute;left:26px;top:0;bottom:0;width:3px;
+  background:linear-gradient(to bottom,#f9a8d4,#fbcfe8,#fce7f3);border-radius:3px;z-index:0}
+.gphase{position:relative;z-index:1;margin-bottom:9px}
+.ph-hdr{display:flex;align-items:center;gap:11px;padding:11px 15px;
+  background:linear-gradient(135deg,#fdf2f8,#fff);
+  border-radius:var(--r);border:1.5px solid var(--p200);cursor:pointer;user-select:none;transition:box-shadow .2s;}
+.ph-hdr:hover{box-shadow:var(--sh-md)}
+.ph-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:1rem;flex-shrink:0;border:2px solid #fff;
+  box-shadow:0 2px 8px rgba(244,114,182,.3);}
+.dot-pink{background:linear-gradient(135deg,#f9a8d4,#f472b6)}
+.dot-sky{background:linear-gradient(135deg,#a5f3fc,#7dd3fc)}
+.dot-sage{background:linear-gradient(135deg,#bbf7d0,#86efac)}
+.dot-gold{background:linear-gradient(135deg,#fde68a,#fbbf24)}
+.ph-info{flex:1}.ph-name{font-family:'Cormorant Garamond',serif;font-size:1.02rem;font-weight:700;color:var(--dark)}
+.ph-prog{font-size:.73rem;color:var(--light);margin-top:2px}
+.ph-chev{font-size:.75rem;color:var(--light);transition:transform .25s}
+.ph-hdr.open .ph-chev{transform:rotate(180deg)}
+.mini-goals{display:none;padding:7px 7px 7px 54px;flex-direction:column;gap:6px}
+.mini-goals.open{display:flex}
+.mg{display:flex;align-items:flex-start;gap:9px;padding:10px 13px;border-radius:12px;
+  background:#fff;border:1.5px solid var(--p100);transition:all .2s;cursor:pointer;}
+.mg:hover{border-color:var(--p300);box-shadow:var(--sh)}
+.mg.checked{background:#f0fdf4;border-color:#86efac}
+.mg-ck{width:21px;height:21px;border-radius:50%;flex-shrink:0;border:2.5px solid var(--p300);
+  background:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;color:#fff;transition:all .22s;margin-top:1px;}
+.mg.checked .mg-ck{background:linear-gradient(135deg,#86efac,#4ade80);border-color:#4ade80}
+.mg-tx{flex:1}.mg-title{font-size:.86rem;font-weight:600;color:var(--dark)}
+.mg.checked .mg-title{text-decoration:line-through;color:#bbb}
+.mg-sub{font-size:.73rem;color:var(--light);margin-top:2px}
+
+/* ══ WATER ══ */
+.wcups{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:13px 0 9px}
+.wcup{width:44px;height:54px;border-radius:8px 8px 12px 12px;border:2px solid var(--p200);
+  background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;transition:all .2s;position:relative;overflow:hidden;}
+.wcup::before{content:'';position:absolute;bottom:0;left:0;right:0;height:0%;
+  background:linear-gradient(to top,#7dd3fc88,#bfdbfe44);
+  transition:height .4s cubic-bezier(.34,1.56,.64,1);}
+.wcup.filled::before{height:100%}.wcup.filled{border-color:var(--sky)}
+.wcup span{position:relative;z-index:1}
+
+/* ══ EXERCISE ITEM ══ */
+.ex-item{display:flex;align-items:flex-start;gap:11px;padding:11px 13px;
+  border-radius:12px;background:#fff;border:1.5px solid var(--p100);margin-bottom:8px;transition:all .2s;}
+.ex-item.done-ex{background:#f0fdf4;border-color:#86efac}
+.ex-ck{width:25px;height:25px;border-radius:7px;border:2px solid var(--p300);background:#fff;
+  flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;color:#fff;transition:all .22s;}
+.ex-item.done-ex .ex-ck{background:linear-gradient(135deg,#86efac,#4ade80);border-color:#4ade80}
+.ex-info{flex:1}.ex-name{font-weight:700;font-size:.86rem;color:var(--dark)}
+.ex-meta{font-size:.73rem;color:var(--light);margin-top:2px}
+.ex-safe{font-size:.69rem;color:var(--sage-dk);font-weight:700;margin-top:2px}
+.yt-lnk{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;color:#dc2626;
+  font-weight:700;text-decoration:none;padding:2px 8px;border-radius:7px;
+  background:#fee2e2;margin-top:4px;transition:all .2s;}
+.yt-lnk:hover{background:#dc2626;color:#fff}
+.rt-time{font-size:.7rem;font-weight:800;color:var(--mid);text-transform:uppercase;
+  letter-spacing:.08em;padding:3px 11px;background:var(--petal);border-radius:20px;
+  display:inline-block;margin-bottom:7px}
+
+/* ══ CHORES ══ */
+.chore-block{margin-bottom:16px}
+.chore-period{font-size:.7rem;font-weight:800;color:var(--mid);text-transform:uppercase;
+  letter-spacing:.08em;padding:4px 12px;border-radius:20px;
+  display:inline-flex;align-items:center;gap:5px;margin-bottom:8px}
+.cp-morning{background:#fef9c3;color:#854d0e}
+.cp-midday{background:var(--p100);color:var(--mid)}
+.cp-afternoon{background:#e0f2fe;color:var(--sky-dk)}
+.cp-evening{background:#ede9fe;color:#5b21b6}
+.cp-weekly{background:#dcfce7;color:var(--sage-dk)}
+.chore-item{display:flex;align-items:center;gap:10px;padding:10px 13px;
+  border-radius:12px;background:#fff;border:1.5px solid var(--p100);margin-bottom:7px;transition:all .2s;cursor:pointer;}
+.chore-item:hover{border-color:var(--p200);box-shadow:var(--sh)}
+.chore-item.done-ch{background:#fdf4ff;border-color:var(--p200);opacity:.75}
+.ch-ck{width:23px;height:23px;border-radius:50%;flex-shrink:0;border:2.5px solid var(--p300);
+  background:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:.62rem;color:#fff;transition:all .22s;}
+.chore-item.done-ch .ch-ck{background:linear-gradient(135deg,#f9a8d4,#f472b6);border-color:var(--p400)}
+.ch-info{flex:1}
+.ch-name{font-size:.86rem;font-weight:700;color:var(--dark)}
+.chore-item.done-ch .ch-name{text-decoration:line-through;color:#bbb}
+.ch-meta{font-size:.72rem;color:var(--light);margin-top:1px}
+.ch-time{font-size:.72rem;font-weight:800;color:var(--p400);background:var(--petal);
+  padding:2px 8px;border-radius:8px;white-space:nowrap;flex-shrink:0}
+.ch-tip{font-size:.69rem;color:var(--sage-dk);margin-top:2px}
+
+/* ══ FASTING RING ══ */
+.fast-ring{width:150px;height:150px;margin:0 auto 14px;border-radius:50%;
+  position:relative;display:flex;align-items:center;justify-content:center;
+  background:conic-gradient(var(--p400) 0deg,var(--p200) 0deg);box-shadow:0 0 0 11px var(--petal);}
+.fast-inner{width:120px;height:120px;background:#fff;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:inset 0 2px 10px rgba(244,114,182,.1);}
+.fast-t{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--p500);line-height:1}
+.fast-l{font-size:.67rem;color:var(--light);margin-top:3px}
+.fast-plans{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.fpi{padding:11px;border-radius:12px;background:var(--petal);border:1.5px solid var(--p200);text-align:center}
+.fpi-name{font-weight:800;font-size:.8rem;color:var(--dark)}
+.fpi-desc{font-size:.71rem;color:var(--light);margin-top:2px}
+.fpi-safe{font-size:.67rem;color:var(--sage-dk);margin-top:4px;font-weight:700}
+
+/* ══ WEIGHT GRAPH ══ */
+.weight-entry{display:flex;align-items:center;gap:10px;padding:9px 13px;
+  border-radius:10px;background:#fff;border:1.5px solid var(--p100);margin-bottom:7px;}
+.we-date{font-size:.73rem;color:var(--light);flex:1}
+.we-val{font-weight:800;color:var(--p500);font-size:.95rem}
+.we-diff{font-size:.7rem}.diff-dn{color:var(--sage-dk)}.diff-up{color:#ef4444}
+
+/* ══ PHOTO GRID ══ */
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.photo-slot{aspect-ratio:1;border-radius:12px;border:2px dashed var(--p300);
+  background:var(--petal);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.5rem;overflow:hidden;transition:all .2s;}
+.photo-slot:hover{border-color:var(--p500);background:var(--blush)}
+.photo-slot img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+
+/* ══ VA ROADMAP ══ */
+.va-phase{position:relative;padding:0 0 0 50px;margin-bottom:20px}
+.va-phase::before{content:'';position:absolute;left:17px;top:40px;bottom:-20px;
+  width:2.5px;background:linear-gradient(to bottom,var(--p300),var(--p100))}
+.va-phase:last-child::before{display:none}
+.va-dot{position:absolute;left:6px;top:9px;width:23px;height:23px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:.67rem;
+  font-weight:800;color:#fff;z-index:2;}
+.va-card{background:#fff;border-radius:var(--r);padding:17px;
+  border:1.5px solid var(--p200);box-shadow:var(--sh);}
+.va-phase-lbl{font-size:.68rem;font-weight:800;text-transform:uppercase;
+  letter-spacing:.1em;margin-bottom:4px}
+.va-phase-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;
+  font-weight:700;color:var(--dark);margin-bottom:9px}
+.skills-row{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0}
+.sp{display:flex;align-items:center;gap:4px;padding:4px 11px;border-radius:20px;
+  font-size:.73rem;font-weight:700;transition:all .2s;cursor:default;border:1.5px solid transparent;}
+.sp-pk{background:var(--petal);color:var(--p500);border-color:var(--p200)}
+.sp-sk{background:var(--sky-lt);color:var(--sky-dk);border-color:#bae6fd}
+.sp-gd{background:var(--gold-lt);color:var(--gold-dk);border-color:#fde68a}
+.sp-sg{background:var(--sage-lt);color:var(--sage-dk);border-color:#bbf7d0}
+.sp-lv{background:var(--lav-lt);color:var(--lav-dk);border-color:#ddd6fe}
+.va-tasks{display:flex;flex-direction:column;gap:5px;margin-top:10px}
+.vt{display:flex;align-items:flex-start;gap:8px;padding:8px 11px;border-radius:10px;
+  background:var(--p50);cursor:pointer;border:1.5px solid var(--p100);transition:all .2s;}
+.vt.done-vt{background:#f0fdf4;border-color:#86efac}
+.vt:hover{box-shadow:var(--sh)}
+.vt-ck{width:19px;height:19px;border-radius:5px;flex-shrink:0;border:2px solid var(--p300);
+  background:#fff;margin-top:1px;display:flex;align-items:center;justify-content:center;
+  font-size:.58rem;color:#fff;transition:all .2s;}
+.vt.done-vt .vt-ck{background:linear-gradient(135deg,#86efac,#4ade80);border-color:#4ade80}
+.vt-txt{flex:1;font-size:.82rem;color:var(--dark)}
+.vt.done-vt .vt-txt{text-decoration:line-through;color:#bbb}
+.vt-sub{font-size:.7rem;color:var(--light);margin-top:1px}
+.yt-sm{display:inline-flex;align-items:center;gap:3px;font-size:.68rem;color:#dc2626;
+  font-weight:700;text-decoration:none;padding:2px 7px;background:#fee2e2;
+  border-radius:6px;margin-top:3px;transition:all .2s;}
+.yt-sm:hover{background:#dc2626;color:#fff}
+
+/* RECIPE */
+.rec-card{background:linear-gradient(135deg,#fff0f8,#fff);
+  border:1.5px solid var(--p200);border-radius:var(--r);padding:19px;margin-bottom:16px}
+.rec-title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:var(--dark);margin-bottom:3px}
+.rec-tag{font-size:.71rem;color:var(--light);margin-bottom:11px}
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.rec-sec{font-size:.8rem}
+.rec-sec h4{font-weight:800;color:var(--mid);margin-bottom:5px;font-size:.77rem;text-transform:uppercase;letter-spacing:.06em}
+.rec-sec li{margin-left:13px;margin-bottom:2px;color:#555}
+.rec-cal{display:inline-flex;align-items:center;gap:5px;background:var(--petal);
+  padding:5px 13px;border-radius:20px;font-size:.8rem;font-weight:700;color:var(--p500);margin-top:11px}
+
+/* UPLOAD ZONE */
+.upload-zone{border:2.5px dashed var(--p300);border-radius:var(--r);
+  padding:32px;text-align:center;cursor:pointer;background:var(--petal);transition:all .2s;}
+.upload-zone:hover{border-color:var(--p500);background:var(--blush)}
+
+/* SKILL ROW (VA skills upskill) */
+.sk-row{display:flex;align-items:center;gap:11px;padding:11px 13px;
+  background:#fff;border-radius:12px;border:1.5px solid var(--p100);margin-bottom:8px;}
+.sk-icon{font-size:1.35rem;flex-shrink:0}.sk-info{flex:1}
+.sk-name{font-weight:700;font-size:.86rem;color:var(--dark)}
+.sk-lv{font-size:.73rem;color:var(--light)}
+.sk-bar{height:6px;background:var(--p100);border-radius:10px;margin-top:4px;overflow:hidden}
+.sk-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#f9a8d4,#f472b6)}
+.sk-links{display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+
+/* PROFILE BMI */
+.bmi-result{display:flex;align-items:center;gap:10px;padding:10px 14px;
+  background:var(--petal);border-radius:12px;border:1.5px solid var(--p200);margin-top:12px}
+.bmi-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--p500)}
+.bmi-info{flex:1}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--petal)}
+::-webkit-scrollbar-thumb{background:var(--p300);border-radius:10px}
+
+/* ══ SAMSUNG HEALTH ══ */
+.sh-step{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--p100)}
+.sh-step:last-child{border-bottom:none}
+.sh-step-num{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#f9a8d4,#f472b6);
+  color:#fff;font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.sh-step-txt{font-size:.83rem;color:var(--dark);line-height:1.5}
+.sh-upload-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:4px}
+@media(max-width:560px){.sh-upload-grid{grid-template-columns:1fr 1fr}}
+.sh-upload-card{background:var(--p50);border:2px dashed var(--p200);border-radius:13px;
+  padding:13px 10px;text-align:center;cursor:pointer;transition:all .2s}
+.sh-upload-card:hover{border-color:var(--p400);background:var(--petal);transform:translateY(-2px)}
+.sh-upload-card.uploaded{border-style:solid;border-color:var(--sage);background:#f0fdf4}
+.sh-upload-icon{font-size:1.5rem;margin-bottom:4px}
+.sh-upload-label{font-size:.78rem;font-weight:800;color:var(--dark)}
+.sh-upload-hint{font-size:.6rem;color:#bbb;margin-top:2px;word-break:break-all;line-height:1.3}
+.sh-upload-status{font-size:.7rem;font-weight:700;color:var(--light);margin-top:5px}
+.sh-upload-card.uploaded .sh-upload-status{color:var(--sage-dk)}
+.sh-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:500px){.sh-stats-grid{grid-template-columns:1fr 1fr}}
+.sh-stat-card{background:var(--p50);border-radius:13px;padding:13px 10px;text-align:center;
+  border:1.5px solid var(--p100)}
+.sh-stat-icon{font-size:1.4rem;margin-bottom:3px}
+.sh-stat-val{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.5rem;font-weight:700;
+  color:var(--p500);line-height:1}
+.sh-stat-lbl{font-size:.68rem;color:var(--light);margin-top:2px}
+.sh-stat-goal{font-size:.67rem;color:var(--sage-dk);margin-top:3px;font-weight:700}
+.sh-insight{display:flex;align-items:flex-start;gap:9px;padding:10px 13px;border-radius:11px;
+  margin-bottom:8px;font-size:.8rem}
+.sh-insight.good{background:#f0fdf4;border:1.5px solid #86efac;color:var(--sage-dk)}
+.sh-insight.warn{background:#fef3c7;border:1.5px solid #fbbf24;color:var(--gold-dk)}
+.sh-insight.info{background:var(--p50);border:1.5px solid var(--p200);color:var(--mid)}
+.sh-history-row{display:grid;grid-template-columns:1fr repeat(5,auto);gap:8px;
+  padding:8px 10px;border-radius:9px;background:#fff;border:1.5px solid var(--p100);
+  margin-bottom:6px;align-items:center;font-size:.75rem}
+.sh-history-row.header{background:var(--petal);font-weight:800;font-size:.7rem;
+  color:var(--mid);text-transform:uppercase;letter-spacing:.05em}
+
+/* MISC */
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--blush),transparent);margin:14px 0}
+.row-gap{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast">✓ Saved!</div>
+
+<!-- Offline indicator -->
+<div id="offlineBadge">📶 Offline Mode</div>
+
+<!-- Install banner (shows on mobile browsers) -->
+<div id="installBanner" class="hidden">
+  <div>
+    <div class="install-txt">📱 Add to Home Screen</div>
+    <div class="install-sub">Install My Journey as an app — works offline!</div>
+  </div>
+  <div class="install-btns">
+    <button class="ibtn ibtn-yes" id="installBtn">Install</button>
+    <button class="ibtn ibtn-no" onclick="dismissInstall()">Later</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">🌸 My Journey</div>
+  <div class="nav-tabs">
+    <button class="ntab active" onclick="showSec('profile')">👤 Profile</button>
+    <button class="ntab" onclick="showSec('goals')">🗺 Goals</button>
+    <button class="ntab" onclick="showSec('wellness')">💪 Wellness</button>
+    <button class="ntab" onclick="showSec('chores')">🏠 Chores</button>
+    <button class="ntab" onclick="showSec('nutrition')">🥗 Nutrition</button>
+    <button class="ntab" onclick="showSec('fasting')">⏱ Fasting</button>
+    <button class="ntab" onclick="showSec('tracking')">📊 Tracking</button>
+    <button class="ntab" onclick="showSec('va')">💼 VA Journey</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     PROFILE
+═══════════════════════════════════════ -->
+<div id="profile" class="sec active">
+<div class="pw">
+  <div class="sh">👤 My Profile</div>
+  <p class="ss">Your personal dashboard — health stats, BMI & journey info 🌸</p>
+
+  <!-- PROFILE HERO CARD -->
+  <div class="profile-hero">
+    <div class="profile-top">
+      <div class="profile-avatar" id="avatarCircle">
+        <span id="avatarEmoji">🌸</span>
+      </div>
+      <div class="profile-greeting">
+        <div class="profile-name-display" id="displayName">Hello, Beautiful! 🌸</div>
+        <div class="profile-tagline" id="displayTagline">Add your details to personalize your journey</div>
+      </div>
+      <button class="btn bs bsm" onclick="toggleProfileForm()">✏️ Edit Profile</button>
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="profile-stats-row" id="statsRow" style="display:none">
+      <div class="pstat">
+        <div class="pstat-val" id="dispAge">—</div>
+        <div class="pstat-lbl">Age</div>
+      </div>
+      <div class="pstat">
+        <div class="pstat-val" id="dispWeight">—</div>
+        <div class="pstat-lbl">Weight</div>
+        <div class="pstat-unit" id="dispWeightUnit"></div>
+      </div>
+      <div class="pstat">
+        <div class="pstat-val" id="dispHeight">—</div>
+        <div class="pstat-lbl">Height</div>
+        <div class="pstat-unit" id="dispHeightUnit"></div>
+      </div>
+      <div class="pstat">
+        <div class="pstat-val" id="dispBMI">—</div>
+        <div class="pstat-lbl">BMI</div>
+        <div id="bmiCat"></div>
+      </div>
+    </div>
+
+    <!-- BMI RESULT BAR -->
+    <div class="bmi-result" id="bmiResult" style="display:none">
+      <div class="bmi-num" id="bmiNum">0</div>
+      <div class="bmi-info">
+        <div id="bmiLabel" style="font-weight:800;font-size:.88rem;color:var(--dark)"></div>
+        <div id="bmiTip" style="font-size:.75rem;color:var(--light);margin-top:2px"></div>
+      </div>
+      <span class="bdg" id="bmiTag"></span>
+    </div>
+
+    <!-- EDIT FORM -->
+    <div class="profile-form" id="profileForm">
+      <div class="divider"></div>
+      <div class="profile-form-grid">
+        <div>
+          <label class="lbl">Full Name</label>
+          <input type="text" class="fld" id="pName" placeholder="Your name">
+        </div>
+        <div>
+          <label class="lbl">Age</label>
+          <input type="number" class="fld" id="pAge" placeholder="e.g. 28" min="15" max="99">
+        </div>
+        <div>
+          <label class="lbl">Sex</label>
+          <select class="fld" id="pSex">
+            <option value="">Select</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Non-binary">Non-binary</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+        </div>
+        <div>
+          <label class="lbl">Current Weight</label>
+          <input type="number" class="fld" id="pWeight" placeholder="e.g. 65" step="0.1">
+        </div>
+        <div>
+          <label class="lbl">Weight Unit</label>
+          <select class="fld" id="pWeightUnit">
+            <option value="kg">kg</option>
+            <option value="lbs">lbs</option>
+          </select>
+        </div>
+        <div>
+          <label class="lbl">Height</label>
+          <input type="number" class="fld" id="pHeight" placeholder="e.g. 162" step="0.1">
+        </div>
+        <div>
+          <label class="lbl">Height Unit</label>
+          <select class="fld" id="pHeightUnit">
+            <option value="cm">cm</option>
+            <option value="ft">ft</option>
+          </select>
+        </div>
+        <div>
+          <label class="lbl">Goal Weight</label>
+          <input type="number" class="fld" id="pGoalWeight" placeholder="e.g. 55" step="0.1">
+        </div>
+        <div>
+          <label class="lbl">Postpartum Status</label>
+          <select class="fld" id="pPostpartum">
+            <option value="">Select</option>
+            <option value="1 year postpartum" selected>1 Year Postpartum</option>
+            <option value="6 months postpartum">6 Months Postpartum</option>
+            <option value="2+ years postpartum">2+ Years Postpartum</option>
+            <option value="Not postpartum">Not Postpartum</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:14px">
+        <label class="lbl">Personal Goal / Motivation 💬</label>
+        <input type="text" class="fld" id="pGoal" placeholder="e.g. Feel strong and confident for my family 🌸">
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn bp" onclick="saveProfile()">💾 Save Profile</button>
+        <button class="btn bs bsm" onclick="toggleProfileForm()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFO CARDS -->
+  <div class="g2">
+    <div class="card">
+      <div class="ct">🎯 Weight Goal</div>
+      <div id="weightGoalInfo" style="font-size:.85rem;color:var(--light)">Add your current and goal weight to see your progress plan.</div>
+    </div>
+    <div class="card">
+      <div class="ct">💡 Health Tips for You</div>
+      <div id="healthTips" style="font-size:.82rem;color:#555;line-height:1.6">
+        💧 Drink water first thing in the morning<br>
+        🏃 Gentle walks = safe postpartum cardio<br>
+        😴 Rest is part of healing — sleep matters<br>
+        🥗 Eat whole foods during your eating window
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">🌸 Daily Affirmation</div>
+    <div id="affirmation" style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--mid);text-align:center;padding:10px 0;font-style:italic">
+      "You are stronger than you know, and more beautiful than you see."
+    </div>
+    <div style="text-align:center;margin-top:10px">
+      <button class="btn bs bsm" onclick="newAffirmation()">✨ New Affirmation</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     GOAL MAP
+═══════════════════════════════════════ -->
+<div id="goals" class="sec">
+<div class="pw">
+  <div class="sh">🗺 My Goal Map</div>
+  <p class="ss">Tap each milestone to reveal mini-goals. Check them off as you go! 🌸</p>
+
+  <div class="gm-stats">
+    <div class="gm-stat"><div class="gm-num" id="gmDone">0</div><div class="gm-lbl">Goals Completed</div></div>
+    <div class="gm-stat"><div class="gm-num" id="gmPct">0%</div><div class="gm-lbl">Overall Progress</div></div>
+    <div class="gm-stat"><div class="gm-num" id="gmLeft">23</div><div class="gm-lbl">Goals Remaining</div></div>
+  </div>
+  <div style="margin-bottom:16px">
+    <div class="pb"><div class="pf" id="gmBar" style="width:0%"></div></div>
+  </div>
+
+  <div class="gmap">
+    <div class="gmap-line"></div>
+
+    <!-- PHASE 1 -->
+    <div class="gphase">
+      <div class="ph-hdr" onclick="togglePhase(this)">
+        <div class="ph-dot dot-pink">🌸</div>
+        <div class="ph-info">
+          <div class="ph-name">Phase 1 — Foundation (Weeks 1–4)</div>
+          <div class="ph-prog" id="pph1">0 / 6 done</div>
+        </div>
+        <span class="ph-chev">▼</span>
+      </div>
+      <div class="mini-goals" id="mgg1">
+        <div class="mg" onclick="toggleMG(this,'mgg1')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">💧 Drink 8 glasses of water for 7 days straight</div><div class="mg-sub">Track in Wellness tab → Water section</div></div>
+          <span class="bdg bsk">Hydration</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg1')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">🏃 Complete morning stretch + 10-min walk for 5 days</div><div class="mg-sub">DR-safe, postpartum approved — see Wellness tab</div></div>
+          <span class="bdg bsg">Movement</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg1')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">⏰ Start 16:8 fasting for 5 days (12pm–8pm window)</div><div class="mg-sub">Use the Fasting tab to track your window</div></div>
+          <span class="bdg bgd">Fasting</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg1')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">📸 Take your Week 1 progress photo</div><div class="mg-sub">Upload in Tracking tab → Photo Log</div></div>
+          <span class="bdg bpk">Tracking</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg1')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">⚖️ Log your starting weight</div><div class="mg-sub">Go to Tracking → Weight Log</div></div>
+          <span class="bdg bpk">Tracking</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg1')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">💼 Enroll in your first GHL course/tutorial</div><div class="mg-sub">See VA Journey tab for recommended links</div></div>
+          <span class="bdg blv">VA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="gphase">
+      <div class="ph-hdr" onclick="togglePhase(this)">
+        <div class="ph-dot dot-pink">🌷</div>
+        <div class="ph-info">
+          <div class="ph-name">Phase 2 — Building Momentum (Weeks 5–8)</div>
+          <div class="ph-prog" id="pph2">0 / 6 done</div>
+        </div>
+        <span class="ph-chev">▼</span>
+      </div>
+      <div class="mini-goals" id="mgg2">
+        <div class="mg" onclick="toggleMG(this,'mgg2')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">🏋️ Add 20-min DR-safe core session 3x/week</div><div class="mg-sub">Includes gentle core activation — see Wellness tab</div></div>
+          <span class="bdg bsg">Movement</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg2')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">🥗 Cook 3 healthy recipes from the app this week</div><div class="mg-sub">Check Nutrition tab for today's recipe</div></div>
+          <span class="bdg bgd">Nutrition</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg2')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">⚖️ Lose first 1–2 kg</div><div class="mg-sub">Log weekly in Tracking tab</div></div>
+          <span class="bdg bpk">Weight Loss</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg2')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">💦 Complete first safe 24-hr water fast</div><div class="mg-sub">See Fasting tab — doctor check recommended first</div></div>
+          <span class="bdg bsk">Fasting</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg2')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">💼 Finish GHL Basics & send first practice pipeline</div><div class="mg-sub">VA Journey → Phase 1 GHL tasks</div></div>
+          <span class="bdg blv">VA</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg2')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">📱 Create VA portfolio 1-pager in Canva</div><div class="mg-sub">Highlight MS Office + Google Workspace skills</div></div>
+          <span class="bdg blv">VA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="gphase">
+      <div class="ph-hdr" onclick="togglePhase(this)">
+        <div class="ph-dot dot-sky">🌟</div>
+        <div class="ph-info">
+          <div class="ph-name">Phase 3 — Levelling Up (Month 2–3)</div>
+          <div class="ph-prog" id="pph3">0 / 6 done</div>
+        </div>
+        <span class="ph-chev">▼</span>
+      </div>
+      <div class="mini-goals" id="mgg3">
+        <div class="mg" onclick="toggleMG(this,'mgg3')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">🏃 Walk 30 min daily + 2x/week bodyweight session</div><div class="mg-sub">Consistent movement = diastasis heals faster</div></div>
+          <span class="bdg bsg">Movement</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg3')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">⚖️ Reach –5 kg milestone from starting weight</div><div class="mg-sub">Track weekly — celebrate this one! 🎉</div></div>
+          <span class="bdg bpk">Weight Loss</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg3')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">💼 Land first VA client or internship project</div><div class="mg-sub">Apply with your portfolio + GHL skills</div></div>
+          <span class="bdg blv">VA</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg3')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">🏗 Complete Construction VA intro course</div><div class="mg-sub">See VA tab → Phase 2 resources</div></div>
+          <span class="bdg bsk">VA</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg3')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">🤖 Learn 1 AI automation tool (Make.com or Zapier)</div><div class="mg-sub">VA tab → Phase 2 AI/Automation resources</div></div>
+          <span class="bdg bgd">Automation</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg3')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">📷 Week 12 transformation comparison photo</div><div class="mg-sub">Compare with Week 1 photo — you've got this!</div></div>
+          <span class="bdg bpk">Milestone</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="gphase">
+      <div class="ph-hdr" onclick="togglePhase(this)">
+        <div class="ph-dot dot-sage">🏆</div>
+        <div class="ph-info">
+          <div class="ph-name">Phase 4 — Thriving (Month 3+)</div>
+          <div class="ph-prog" id="pph4">0 / 5 done</div>
+        </div>
+        <span class="ph-chev">▼</span>
+      </div>
+      <div class="mini-goals" id="mgg4">
+        <div class="mg" onclick="toggleMG(this,'mgg4')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">🎯 Reach goal weight — sustainable 0.5–1kg/week pace</div><div class="mg-sub">Ideal postpartum weight loss pace</div></div>
+          <span class="bdg bpk">Weight Loss</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg4')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">💪 Core strength: no DR pain, functional movement</div><div class="mg-sub">Cleared by physiotherapist = WIN</div></div>
+          <span class="bdg bsg">Health</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg4')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">💼 Working consistently as VA (GHL + Construction)</div><div class="mg-sub">Regular income from VA work 🎉</div></div>
+          <span class="bdg blv">VA</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg4')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">📈 Launch SMM or media buyer service offering</div><div class="mg-sub">Add this to your portfolio and rates</div></div>
+          <span class="bdg bsk">VA Growth</span>
+        </div>
+        <div class="mg" onclick="toggleMG(this,'mgg4')">
+          <div class="mg-ck">✓</div>
+          <div class="mg-tx"><div class="mg-title">🌸 Celebrate: you crushed BOTH goals! ✨</div><div class="mg-sub">Take a glam photo — you've earned it!</div></div>
+          <span class="bdg bgd">Celebration</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     WELLNESS
+═══════════════════════════════════════ -->
+<div id="wellness" class="sec">
+<div class="pw">
+  <div class="sh">💪 Daily Wellness</div>
+  <p class="ss">Safe postpartum routines spread throughout the day 🌸</p>
+
+  <!-- WATER -->
+  <div class="card">
+    <div class="ct">💧 Water Intake — Goal: 8 glasses</div>
+    <div class="wcups" id="waterCups"></div>
+    <div style="text-align:center;font-size:.83rem;color:var(--mid);margin-bottom:8px">
+      <strong id="waterCount" style="color:var(--p500);font-size:1.1rem">0</strong> / 8 glasses &nbsp;·&nbsp; <span id="waterMl">0 ml</span>
+    </div>
+    <div class="pb"><div class="pf" id="waterProg" style="width:0%"></div></div>
+    <div class="nb" style="margin-top:12px">💡 Postpartum tip: If breastfeeding, aim for 10–12 glasses. Hydration boosts metabolism and milk supply!</div>
+    <button class="btn bs bsm" style="margin-top:6px" onclick="resetWater()">↺ Reset for Today</button>
+  </div>
+
+  <!-- EXERCISES -->
+  <div class="card">
+    <div class="ct">🏃 Today's Exercise Routine</div>
+    <div class="nb">✅ All exercises are <strong>diastasis recti safe</strong>, 1yr postpartum approved & beginner level. Spread throughout the day — never all at once!</div>
+
+    <div class="rt-time">🌅 Morning — 7:00 AM · 5 min</div>
+    <div class="ex-item" id="ex1">
+      <div class="ex-ck" onclick="toggleEx('ex1')">✓</div>
+      <div class="ex-info">
+        <div class="ex-name">🧘 Gentle Morning Stretch + Deep Breathing</div>
+        <div class="ex-meta">5 min · No equipment · In bed or on mat</div>
+        <div class="ex-safe">✅ DR Safe · Wakes body gently · Activates core softly</div>
+        <a href="https://www.youtube.com/watch?v=sTANio_2E0Q" target="_blank" class="yt-lnk">▶ YouTube: 5 Min Postpartum Morning Stretch</a>
+      </div>
+    </div>
+
+    <div class="rt-time" style="margin-top:10px">☀️ Mid-Morning — 9:30 AM · 3 min</div>
+    <div class="ex-item" id="ex2">
+      <div class="ex-ck" onclick="toggleEx('ex2')">✓</div>
+      <div class="ex-info">
+        <div class="ex-name">🌬 Diaphragmatic Breathing + Belly Pumps</div>
+        <div class="ex-meta">3 min · Seated or lying down</div>
+        <div class="ex-safe">✅ #1 DR Rehab Exercise · Reconnects core + pelvic floor</div>
+        <a href="https://www.youtube.com/watch?v=H3BE6qdBkOQ" target="_blank" class="yt-lnk">▶ YouTube: Diastasis Recti Breathing Exercises</a>
+      </div>
+    </div>
+
+    <div class="rt-time" style="margin-top:10px">🌤 Noon — 12:00 PM · 20–30 min</div>
+    <div class="ex-item" id="ex3">
+      <div class="ex-ck" onclick="toggleEx('ex3')">✓</div>
+      <div class="ex-info">
+        <div class="ex-name">🚶 Brisk Walk (with baby if needed!)</div>
+        <div class="ex-meta">20–30 min · Outdoors or treadmill</div>
+        <div class="ex-safe">✅ Best postpartum cardio · Burns fat · Boosts mood</div>
+        <a href="https://www.youtube.com/watch?v=WFI3kJL7Kp0" target="_blank" class="yt-lnk">▶ YouTube: 30 Min Walk for Beginners</a>
+      </div>
+    </div>
+
+    <div class="rt-time" style="margin-top:10px">🌸 Afternoon — 3:00 PM · 10 min</div>
+    <div class="ex-item" id="ex4">
+      <div class="ex-ck" onclick="toggleEx('ex4')">✓</div>
+      <div class="ex-info">
+        <div class="ex-name">💪 DR-Safe Core Activation (No Crunches!)</div>
+        <div class="ex-meta">10 min · Dead bugs, heel slides, bird dogs</div>
+        <div class="ex-safe">✅ DR Safe · Heals abdominal separation · Safe for 1yr PP</div>
+        <a href="https://www.youtube.com/watch?v=RIlLbIPMHxc" target="_blank" class="yt-lnk">▶ YouTube: Diastasis Recti Safe Core</a>
+      </div>
+    </div>
+
+    <div class="rt-time" style="margin-top:10px">🌙 Evening — 7:00 PM · 10–15 min</div>
+    <div class="ex-item" id="ex5">
+      <div class="ex-ck" onclick="toggleEx('ex5')">✓</div>
+      <div class="ex-info">
+        <div class="ex-name">🧘 Postpartum Yoga / Gentle Cooldown</div>
+        <div class="ex-meta">10–15 min · Mat · Wind down before bed</div>
+        <div class="ex-safe">✅ Reduces cortisol · Improves sleep · Perfect for new moms</div>
+        <a href="https://www.youtube.com/watch?v=Bmb0YopT1gE" target="_blank" class="yt-lnk">▶ YouTube: 15 Min Postpartum Evening Yoga</a>
+      </div>
+    </div>
+    <div class="ex-item" id="ex6">
+      <div class="ex-ck" onclick="toggleEx('ex6')">✓</div>
+      <div class="ex-info">
+        <div class="ex-name">🦵 Lower Body — Wall Sits + Glute Bridges</div>
+        <div class="ex-meta">10 min · 3x/week · Build strength safely</div>
+        <div class="ex-safe">✅ DR Safe · Postpartum lower body strength · Boosts metabolism</div>
+        <a href="https://www.youtube.com/watch?v=3C2dNPm3bGI" target="_blank" class="yt-lnk">▶ YouTube: Postpartum Lower Body Workout</a>
+      </div>
+    </div>
+
+    <div style="margin-top:10px">
+      <div style="font-size:.78rem;color:var(--mid);font-weight:700;margin-bottom:5px">Today: <span id="exDone">0</span>/6 complete</div>
+      <div class="pb"><div class="pf" id="exProg" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     HOUSEHOLD CHORES
+═══════════════════════════════════════ -->
+<div id="chores" class="sec">
+<div class="pw">
+  <div class="sh">🏠 Household Chores</div>
+  <p class="ss">Your daily & weekly chore schedule with suggested timeframes 🌸</p>
+
+  <!-- PROGRESS -->
+  <div class="card" style="padding:15px 20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <span style="font-size:.82rem;font-weight:700;color:var(--mid)">Today's Progress</span>
+      <span style="font-size:.82rem;font-weight:700;color:var(--p500)"><span id="choresDone">0</span>/14 done</span>
+    </div>
+    <div class="pb"><div class="pf" id="choresProg" style="width:0%"></div></div>
+  </div>
+
+  <div class="nb">💡 <strong>Mom tip:</strong> These are spread throughout the day so you're not exhausted all at once. Do chores during baby's nap or playtime when possible. You don't have to do everything every day — be kind to yourself! 🌸</div>
+
+  <!-- MORNING CHORES -->
+  <div class="chore-block">
+    <div class="chore-period cp-morning">🌅 Morning Block — 6:00–9:00 AM</div>
+
+    <div class="chore-item" id="ch1" onclick="toggleChore('ch1')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🛏 Make the Bed</div>
+        <div class="ch-meta">~5 min · Right after waking up</div>
+        <div class="ch-tip">✨ Sets a productive tone for the day</div>
+      </div>
+      <div class="ch-time">6:05 AM</div>
+    </div>
+
+    <div class="chore-item" id="ch2" onclick="toggleChore('ch2')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🍳 Prepare Breakfast / First Meal (16:8 window)</div>
+        <div class="ch-meta">~15 min · Prepare healthy meal for eating window</div>
+        <div class="ch-tip">⏰ Eating window starts at 12pm — prep lunch in advance</div>
+      </div>
+      <div class="ch-time">7:30 AM</div>
+    </div>
+
+    <div class="chore-item" id="ch3" onclick="toggleChore('ch3')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🍽 Wash Breakfast Dishes</div>
+        <div class="ch-meta">~10 min · While coffee/tea brews or right after</div>
+        <div class="ch-tip">💧 Keeps kitchen clean all day</div>
+      </div>
+      <div class="ch-time">8:00 AM</div>
+    </div>
+
+    <div class="chore-item" id="ch4" onclick="toggleChore('ch4')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🧺 Start Laundry Load (if needed)</div>
+        <div class="ch-meta">~5 min active · Machine does the work</div>
+        <div class="ch-tip">👶 With a baby, laundry is constant — batch it 3x/week</div>
+      </div>
+      <div class="ch-time">8:30 AM</div>
+    </div>
+
+    <div class="chore-item" id="ch5" onclick="toggleChore('ch5')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🧹 Quick Living Room Tidy</div>
+        <div class="ch-meta">~10 min · Pick up, straighten cushions, wipe surfaces</div>
+        <div class="ch-tip">✅ A tidy space reduces stress and anxiety</div>
+      </div>
+      <div class="ch-time">9:00 AM</div>
+    </div>
+  </div>
+
+  <!-- MIDDAY CHORES -->
+  <div class="chore-block">
+    <div class="chore-period cp-midday">☀️ Midday Block — 11:00 AM–1:00 PM</div>
+
+    <div class="chore-item" id="ch6" onclick="toggleChore('ch6')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🥗 Prepare Lunch (Break Fast / First Meal)</div>
+        <div class="ch-meta">~20 min · Start eating window at 12:00 PM</div>
+        <div class="ch-tip">⏰ This is your first meal of the day on 16:8</div>
+      </div>
+      <div class="ch-time">11:30 AM</div>
+    </div>
+
+    <div class="chore-item" id="ch7" onclick="toggleChore('ch7')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🧽 Wipe Kitchen Counters + Stove</div>
+        <div class="ch-meta">~8 min · After lunch prep</div>
+        <div class="ch-tip">🧼 Quick wipe prevents buildup</div>
+      </div>
+      <div class="ch-time">12:30 PM</div>
+    </div>
+
+    <div class="chore-item" id="ch8" onclick="toggleChore('ch8')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">👶 Baby/Toddler Feeding & Play Setup</div>
+        <div class="ch-meta">~15 min · Prepare safe play space for afternoon</div>
+        <div class="ch-tip">🌸 Do your afternoon walk now while baby is happy!</div>
+      </div>
+      <div class="ch-time">1:00 PM</div>
+    </div>
+  </div>
+
+  <!-- AFTERNOON CHORES -->
+  <div class="chore-block">
+    <div class="chore-period cp-afternoon">🌤 Afternoon Block — 2:00–5:00 PM</div>
+
+    <div class="chore-item" id="ch9" onclick="toggleChore('ch9')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🧺 Transfer / Fold Laundry</div>
+        <div class="ch-meta">~15–20 min · While watching TV or during nap time</div>
+        <div class="ch-tip">📺 Pair with something enjoyable!</div>
+      </div>
+      <div class="ch-time">2:00 PM</div>
+    </div>
+
+    <div class="chore-item" id="ch10" onclick="toggleChore('ch10')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🛁 Baby Bath / Baby Care Routine</div>
+        <div class="ch-meta">~20 min · Every other day or as needed</div>
+        <div class="ch-tip">🐣 Great bonding time!</div>
+      </div>
+      <div class="ch-time">3:30 PM</div>
+    </div>
+
+    <div class="chore-item" id="ch11" onclick="toggleChore('ch11')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🧹 Sweep / Vacuum Main Floor</div>
+        <div class="ch-meta">~15 min · Focus on kitchen + living room</div>
+        <div class="ch-tip">🍃 Alternate: sweep daily, vacuum 3x/week</div>
+      </div>
+      <div class="ch-time">4:00 PM</div>
+    </div>
+  </div>
+
+  <!-- EVENING CHORES -->
+  <div class="chore-block">
+    <div class="chore-period" style="background:#fce7f3;color:var(--mid)">🌙 Evening Block — 5:00–8:00 PM</div>
+
+    <div class="chore-item" id="ch12" onclick="toggleChore('ch12')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🍽 Cook + Serve Dinner</div>
+        <div class="ch-meta">~30 min · Last meal before 8:00 PM eating window closes</div>
+        <div class="ch-tip">⏰ Must finish eating by 8pm for 16:8!</div>
+      </div>
+      <div class="ch-time">6:00 PM</div>
+    </div>
+
+    <div class="chore-item" id="ch13" onclick="toggleChore('ch13')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🍽 Wash Dinner Dishes + Clean Kitchen</div>
+        <div class="ch-meta">~15 min · Full kitchen reset for tomorrow</div>
+        <div class="ch-tip">✨ Waking up to a clean kitchen = good morning mood!</div>
+      </div>
+      <div class="ch-time">7:00 PM</div>
+    </div>
+
+    <div class="chore-item" id="ch14" onclick="toggleChore('ch14')">
+      <div class="ch-ck">✓</div>
+      <div class="ch-info">
+        <div class="ch-name">🌙 Baby Bedtime Routine + House Tidy</div>
+        <div class="ch-meta">~30 min · Bath, feed, tuck-in + quick house reset</div>
+        <div class="ch-tip">🌸 You deserve rest too — self-care after this!</div>
+      </div>
+      <div class="ch-time">7:30 PM</div>
+    </div>
+  </div>
+
+  <!-- WEEKLY CHORES -->
+  <div class="chore-block">
+    <div class="chore-period cp-weekly">📅 Weekly Chores (Pick a day each)</div>
+
+    <div class="g2">
+      <div>
+        <div style="font-size:.73rem;font-weight:800;color:var(--mid);margin-bottom:7px">📅 Monday / Thursday</div>
+        <div class="chore-item" id="ch15" onclick="toggleChore('ch15')">
+          <div class="ch-ck">✓</div>
+          <div class="ch-info"><div class="ch-name">🚿 Deep Clean Bathroom</div><div class="ch-meta">~20 min · Toilet, sink, mirror, floor</div></div>
+          <div class="ch-time">~20 min</div>
+        </div>
+        <div class="chore-item" id="ch16" onclick="toggleChore('ch16')">
+          <div class="ch-ck">✓</div>
+          <div class="ch-info"><div class="ch-name">🧴 Mop Floors</div><div class="ch-meta">~20 min · All tiled areas</div></div>
+          <div class="ch-time">~20 min</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.73rem;font-weight:800;color:var(--mid);margin-bottom:7px">📅 Wednesday / Saturday</div>
+        <div class="chore-item" id="ch17" onclick="toggleChore('ch17')">
+          <div class="ch-ck">✓</div>
+          <div class="ch-info"><div class="ch-name">🛒 Grocery Shopping / Meal Prep</div><div class="ch-meta">~45 min · Plan meals for the week</div></div>
+          <div class="ch-time">~45 min</div>
+        </div>
+        <div class="chore-item" id="ch18" onclick="toggleChore('ch18')">
+          <div class="ch-ck">✓</div>
+          <div class="ch-info"><div class="ch-name">🪟 Wipe Windows + Dust Surfaces</div><div class="ch-meta">~20 min · Living areas + bedrooms</div></div>
+          <div class="ch-time">~20 min</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn bs bsm" onclick="resetChores()">↺ Reset All for Today</button>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     NUTRITION
+═══════════════════════════════════════ -->
+<div id="nutrition" class="sec">
+<div class="pw">
+  <div class="sh">🥗 Nutrition</div>
+  <p class="ss">Healthy recipes + calorie counter for your 16:8 eating window 🌸</p>
+
+  <div class="itabs">
+    <button class="itab active" onclick="showInner('recipeTab','ntabs',this)">🍽 Recipe of the Day</button>
+    <button class="itab" onclick="showInner('photoTab','ntabs',this)">📸 Photo Calorie Counter</button>
+  </div>
+
+  <div id="recipeTab" class="isec active">
+    <div id="recipeBox"></div>
+    <button class="btn bp bsm" onclick="nextRecipe()">✨ Next Recipe</button>
+  </div>
+
+  <div id="photoTab" class="isec">
+    <div class="card">
+      <div class="ct">📸 Photo Calorie Counter</div>
+      <p style="font-size:.82rem;color:var(--light);margin-bottom:13px">Upload a photo of your meal to get a calorie estimate!</p>
+      <div class="upload-zone" onclick="document.getElementById('foodPhoto').click()">
+        <div style="font-size:2.3rem;margin-bottom:7px">🍽</div>
+        <div style="font-size:.86rem;color:var(--mid)">Tap to upload a food photo</div>
+        <div style="font-size:.73rem;color:#bbb;margin-top:3px">JPG, PNG supported</div>
+      </div>
+      <input type="file" id="foodPhoto" accept="image/*" style="display:none" onchange="handleFoodPhoto(event)">
+      <img id="photoPreview" style="max-width:100%;border-radius:12px;margin-top:13px;display:none" alt="Food">
+      <div id="calorieResult" style="display:none;margin-top:13px;padding:13px;background:#fff;border-radius:12px;border:1.5px solid var(--p200)">
+        <div style="font-weight:700;color:var(--dark);margin-bottom:7px">🤖 Calorie Estimate</div>
+        <div id="calorieText" style="font-size:.83rem;color:#555"></div>
+      </div>
+      <div class="nb" style="margin-top:12px">💡 Best results: clear photo, good lighting, one plate at a time. This is an estimate — a food scale is more accurate.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     FASTING
+═══════════════════════════════════════ -->
+<div id="fasting" class="sec">
+<div class="pw">
+  <div class="sh">⏱ Fasting Tracker</div>
+  <p class="ss">16:8 daily + optional monthly extended fasts — safe protocols 🌸</p>
+
+  <div class="card">
+    <div class="ct">⏰ 16:8 Intermittent Fasting</div>
+    <div style="text-align:center;margin-bottom:14px">
+      <div class="fast-ring" id="fastRing">
+        <div class="fast-inner">
+          <div class="fast-t" id="fastTimer">00:00:00</div>
+          <div class="fast-l" id="fastStatus">Not started</div>
+        </div>
+      </div>
+      <div style="font-size:.78rem;color:var(--light);margin-bottom:11px">Eating window: <strong style="color:var(--p500)">12:00 PM – 8:00 PM</strong></div>
+      <div style="display:flex;gap:9px;justify-content:center;flex-wrap:wrap">
+        <button class="btn bp bsm" onclick="startFast()" id="fastStartBtn">▶ Start Fast</button>
+        <button class="btn bs bsm" onclick="endFast()" id="fastEndBtn" disabled>⏹ End Fast</button>
+        <button class="btn bgo bsm" onclick="resetFast()">↺ Reset</button>
+      </div>
+    </div>
+    <div class="nb">⚡ 16:8: Fast 16hrs, eat within 8hrs. For breastfeeding moms — try 14:10 first. Always consult your doctor.</div>
+  </div>
+
+  <div class="card">
+    <div class="ct">💧 Extended Water Fasting Plans</div>
+    <div class="nb">⚠️ <strong>Safety First:</strong> Medical clearance required before extended fasts, especially postpartum. Do NOT fast beyond 16:8 if breastfeeding.</div>
+    <div class="fast-plans">
+      <div class="fpi"><div class="fpi-name">🌙 20:4 Fast</div><div class="fpi-desc">20hr fast, 4hr eating window. Step up from 16:8.</div><div class="fpi-safe">✅ 2-3x/week once adapted</div></div>
+      <div class="fpi"><div class="fpi-name">💧 24-Hr Water Fast</div><div class="fpi-desc">Water + electrolytes only. Rest on this day.</div><div class="fpi-safe">⚠️ Once/month · Doctor approved</div></div>
+      <div class="fpi"><div class="fpi-name">☀️ 36-Hr Fast</div><div class="fpi-desc">Water, black coffee, electrolytes. Deep metabolic reset.</div><div class="fpi-safe">⚠️ Monthly max · Advanced only</div></div>
+      <div class="fpi"><div class="fpi-name">🔋 Electrolyte Fast</div><div class="fpi-desc">Add sodium, potassium, magnesium to water fasts.</div><div class="fpi-safe">✅ Recommended during fasts</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TRACKING
+═══════════════════════════════════════ -->
+<div id="tracking" class="sec">
+<div class="pw">
+  <div class="sh">📊 Progress Tracking</div>
+  <p class="ss">Weekly weight log, photo progress & graph 🌸</p>
+
+  <div class="itabs">
+    <button class="itab active" onclick="showInner('weightTab','ttabs',this)">⚖️ Weight Log</button>
+    <button class="itab" onclick="showInner('photoLogTab','ttabs',this)">📸 Photo Log</button>
+    <button class="itab" onclick="showInner('samsungTab','ttabs',this)">⌚ Samsung Health</button>
+  </div>
+
+  <div id="weightTab" class="isec active">
+    <div class="card">
+      <div class="ct">⚖️ Log This Week's Weight</div>
+      <div class="g2" style="margin-bottom:12px">
+        <div><label class="lbl">Date</label><input type="date" class="fld" id="wDate"></div>
+        <div><label class="lbl">Weight (kg)</label><input type="number" class="fld" id="wVal" placeholder="e.g. 65.5" step="0.1"></div>
+      </div>
+      <div style="margin-bottom:12px"><label class="lbl">Note (optional)</label><input type="text" class="fld" id="wNote" placeholder="e.g. Feeling great this week!"></div>
+      <button class="btn bp bsm" onclick="logWeight()">+ Log Weight</button>
+    </div>
+
+    <div class="card">
+      <div class="ct">📈 Weight Progress Graph</div>
+      <canvas id="weightChart" height="160" style="width:100%"></canvas>
+    </div>
+
+    <div class="card">
+      <div class="ct">📋 Weight History</div>
+      <div id="weightHistory"><div style="font-size:.83rem;color:var(--light);text-align:center;padding:16px">No entries yet. Log your first weight above! 🌸</div></div>
+    </div>
+  </div>
+
+  <div id="photoLogTab" class="isec">
+    <div class="card">
+      <div class="ct">📸 Weekly Progress Photos</div>
+      <div class="nb">Take a photo each week at the same time/lighting for accurate comparison. Front, side, back if comfortable. 🌸</div>
+      <div class="photo-grid" id="photoGrid">
+        <div class="photo-slot" onclick="uploadPhoto(0)" id="pslot0">
+          <div style="text-align:center"><div>📸</div><div style="font-size:.65rem;color:var(--light);margin-top:3px">Week 1</div></div>
+        </div>
+        <div class="photo-slot" onclick="uploadPhoto(1)" id="pslot1">
+          <div style="text-align:center"><div>📸</div><div style="font-size:.65rem;color:var(--light);margin-top:3px">Week 2</div></div>
+        </div>
+        <div class="photo-slot" onclick="uploadPhoto(2)" id="pslot2">
+          <div style="text-align:center"><div>📸</div><div style="font-size:.65rem;color:var(--light);margin-top:3px">Week 3</div></div>
+        </div>
+        <div class="photo-slot" onclick="uploadPhoto(3)" id="pslot3">
+          <div style="text-align:center"><div>📸</div><div style="font-size:.65rem;color:var(--light);margin-top:3px">Week 4</div></div>
+        </div>
+        <div class="photo-slot" onclick="uploadPhoto(4)" id="pslot4">
+          <div style="text-align:center"><div>📸</div><div style="font-size:.65rem;color:var(--light);margin-top:3px">Week 5</div></div>
+        </div>
+        <div class="photo-slot" onclick="uploadPhoto(5)" id="pslot5">
+          <div style="text-align:center"><div>📸</div><div style="font-size:.65rem;color:var(--light);margin-top:3px">Week 6</div></div>
+        </div>
+      </div>
+      <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)">
+    </div>
+  </div>
+
+  <!-- ⌚ SAMSUNG HEALTH IMPORT TAB -->
+  <div id="samsungTab" class="isec">
+
+    <!-- HOW TO EXPORT GUIDE -->
+    <div class="card" style="background:linear-gradient(135deg,#fff0f6,#fff);border-color:var(--p200)">
+      <div class="ct">⌚ Import from Samsung Health</div>
+      <div class="nb" style="margin-bottom:14px">📲 Samsung Health doesn't allow direct app connections, but you can <strong>export your data as a ZIP file</strong> and upload it here — the app will read your steps, calories, heart rate, sleep and weight automatically!</div>
+
+      <div style="margin-bottom:16px">
+        <div style="font-weight:800;font-size:.82rem;color:var(--mid);margin-bottom:10px">📋 How to Export from Samsung Health:</div>
+        <div class="sh-step"><div class="sh-step-num">1</div><div class="sh-step-txt">Open <strong>Samsung Health</strong> app on your phone</div></div>
+        <div class="sh-step"><div class="sh-step-num">2</div><div class="sh-step-txt">Tap your <strong>Profile picture</strong> (top right)</div></div>
+        <div class="sh-step"><div class="sh-step-num">3</div><div class="sh-step-txt">Tap <strong>⚙️ Settings</strong> → scroll down to <strong>"Download personal data"</strong></div></div>
+        <div class="sh-step"><div class="sh-step-num">4</div><div class="sh-step-txt">Select data types: <strong>Steps, Heart Rate, Sleep, Body composition, Exercise</strong></div></div>
+        <div class="sh-step"><div class="sh-step-num">5</div><div class="sh-step-txt">Tap <strong>"Request"</strong> — Samsung will email you a ZIP file (usually within minutes)</div></div>
+        <div class="sh-step"><div class="sh-step-num">6</div><div class="sh-step-txt">Download the ZIP → extract it → <strong>upload the CSV files below</strong></div></div>
+      </div>
+
+      <!-- ALTERNATIVELY: Manual JSON upload from Samsung Health -->
+      <div style="font-weight:800;font-size:.82rem;color:var(--mid);margin-bottom:8px">📁 Upload Samsung Health CSV Files:</div>
+      <div class="sh-upload-grid">
+        <div class="sh-upload-card" onclick="document.getElementById('shSteps').click()">
+          <div class="sh-upload-icon">👟</div>
+          <div class="sh-upload-label">Steps / Activity</div>
+          <div class="sh-upload-hint">com.samsung.shealth.step_daily_trend.csv</div>
+          <div class="sh-upload-status" id="shStepsStatus">Tap to upload</div>
+        </div>
+        <div class="sh-upload-card" onclick="document.getElementById('shHR').click()">
+          <div class="sh-upload-icon">❤️</div>
+          <div class="sh-upload-label">Heart Rate</div>
+          <div class="sh-upload-hint">com.samsung.health.heart_rate.csv</div>
+          <div class="sh-upload-status" id="shHRStatus">Tap to upload</div>
+        </div>
+        <div class="sh-upload-card" onclick="document.getElementById('shSleep').click()">
+          <div class="sh-upload-icon">😴</div>
+          <div class="sh-upload-label">Sleep</div>
+          <div class="sh-upload-hint">com.samsung.shealth.sleep.csv</div>
+          <div class="sh-upload-status" id="shSleepStatus">Tap to upload</div>
+        </div>
+        <div class="sh-upload-card" onclick="document.getElementById('shWeight').click()">
+          <div class="sh-upload-icon">⚖️</div>
+          <div class="sh-upload-label">Weight / Body</div>
+          <div class="sh-upload-hint">com.samsung.health.body.csv</div>
+          <div class="sh-upload-status" id="shWeightStatus">Tap to upload</div>
+        </div>
+        <div class="sh-upload-card" onclick="document.getElementById('shCal').click()">
+          <div class="sh-upload-icon">🔥</div>
+          <div class="sh-upload-label">Calories Burned</div>
+          <div class="sh-upload-hint">com.samsung.shealth.calories_burned.csv</div>
+          <div class="sh-upload-status" id="shCalStatus">Tap to upload</div>
+        </div>
+        <div class="sh-upload-card" onclick="document.getElementById('shExercise').click()">
+          <div class="sh-upload-icon">🏃</div>
+          <div class="sh-upload-label">Exercise / Workout</div>
+          <div class="sh-upload-hint">com.samsung.shealth.exercise.csv</div>
+          <div class="sh-upload-status" id="shExerciseStatus">Tap to upload</div>
+        </div>
+      </div>
+      <!-- Hidden file inputs -->
+      <input type="file" id="shSteps"    accept=".csv,.json" style="display:none" onchange="parseSHFile(event,'steps')">
+      <input type="file" id="shHR"       accept=".csv,.json" style="display:none" onchange="parseSHFile(event,'heartrate')">
+      <input type="file" id="shSleep"    accept=".csv,.json" style="display:none" onchange="parseSHFile(event,'sleep')">
+      <input type="file" id="shWeight"   accept=".csv,.json" style="display:none" onchange="parseSHFile(event,'weight')">
+      <input type="file" id="shCal"      accept=".csv,.json" style="display:none" onchange="parseSHFile(event,'calories')">
+      <input type="file" id="shExercise" accept=".csv,.json" style="display:none" onchange="parseSHFile(event,'exercise')">
+
+      <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn bp bsm" onclick="applySHData()">✅ Apply Imported Data</button>
+        <button class="btn bs bsm" onclick="clearSHData()">🗑 Clear Import</button>
+      </div>
+    </div>
+
+    <!-- LIVE DASHBOARD — shows after import -->
+    <div class="card" id="shDashboard">
+      <div class="ct">📊 Samsung Health Dashboard</div>
+      <div style="font-size:.78rem;color:var(--light);margin-bottom:14px" id="shLastSync">No data imported yet. Upload your Samsung Health files above! 🌸</div>
+
+      <!-- TODAY'S STATS -->
+      <div style="font-weight:800;font-size:.8rem;color:var(--mid);margin-bottom:10px;text-transform:uppercase;letter-spacing:.07em">📅 Latest Data from Your Watch</div>
+      <div class="sh-stats-grid">
+        <div class="sh-stat-card">
+          <div class="sh-stat-icon">👟</div>
+          <div class="sh-stat-val" id="shStepsVal">—</div>
+          <div class="sh-stat-lbl">Steps</div>
+          <div class="sh-stat-goal" id="shStepsGoal"></div>
+          <div class="pb" style="margin-top:6px"><div class="pf" id="shStepsProg" style="width:0%;background:linear-gradient(90deg,#86efac,#4ade80)"></div></div>
+        </div>
+        <div class="sh-stat-card">
+          <div class="sh-stat-icon">❤️</div>
+          <div class="sh-stat-val" id="shHRVal">—</div>
+          <div class="sh-stat-lbl">Avg Heart Rate</div>
+          <div class="sh-stat-goal" id="shHRZone"></div>
+        </div>
+        <div class="sh-stat-card">
+          <div class="sh-stat-icon">🔥</div>
+          <div class="sh-stat-val" id="shCalVal">—</div>
+          <div class="sh-stat-lbl">Calories Burned</div>
+          <div class="sh-stat-goal" id="shCalGoal"></div>
+          <div class="pb" style="margin-top:6px"><div class="pf" id="shCalProg" style="width:0%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div>
+        </div>
+        <div class="sh-stat-card">
+          <div class="sh-stat-icon">😴</div>
+          <div class="sh-stat-val" id="shSleepVal">—</div>
+          <div class="sh-stat-lbl">Sleep</div>
+          <div class="sh-stat-goal" id="shSleepQuality"></div>
+        </div>
+        <div class="sh-stat-card">
+          <div class="sh-stat-icon">⚖️</div>
+          <div class="sh-stat-val" id="shWeightVal">—</div>
+          <div class="sh-stat-lbl">Weight (kg)</div>
+          <div class="sh-stat-goal" id="shWeightDiff"></div>
+        </div>
+        <div class="sh-stat-card">
+          <div class="sh-stat-icon">🏃</div>
+          <div class="sh-stat-val" id="shExVal">—</div>
+          <div class="sh-stat-lbl">Workouts</div>
+          <div class="sh-stat-goal" id="shExType"></div>
+        </div>
+      </div>
+
+      <!-- STEPS WEEKLY CHART -->
+      <div style="margin-top:18px">
+        <div style="font-weight:800;font-size:.78rem;color:var(--mid);margin-bottom:8px">📈 Steps This Week</div>
+        <canvas id="shStepsChart" height="120" style="width:100%"></canvas>
+      </div>
+
+      <!-- HEART RATE WEEKLY CHART -->
+      <div style="margin-top:16px">
+        <div style="font-weight:800;font-size:.78rem;color:var(--mid);margin-bottom:8px">❤️ Heart Rate Trend</div>
+        <canvas id="shHRChart" height="100" style="width:100%"></canvas>
+      </div>
+
+      <!-- SLEEP CHART -->
+      <div style="margin-top:16px">
+        <div style="font-weight:800;font-size:.78rem;color:var(--mid);margin-bottom:8px">😴 Sleep Duration (hrs)</div>
+        <canvas id="shSleepChart" height="100" style="width:100%"></canvas>
+      </div>
+
+      <!-- INSIGHTS -->
+      <div style="margin-top:16px" id="shInsights"></div>
+
+      <!-- MANUAL ENTRY FALLBACK -->
+      <div style="margin-top:18px">
+        <div style="font-weight:800;font-size:.8rem;color:var(--mid);margin-bottom:10px">✏️ Quick Manual Entry (if no export available)</div>
+        <div class="g3" style="gap:10px;margin-bottom:10px">
+          <div><label class="lbl">Steps Today</label><input type="number" class="fld" id="manSteps" placeholder="e.g. 8500"></div>
+          <div><label class="lbl">Heart Rate (bpm)</label><input type="number" class="fld" id="manHR" placeholder="e.g. 72"></div>
+          <div><label class="lbl">Calories Burned</label><input type="number" class="fld" id="manCal" placeholder="e.g. 420"></div>
+          <div><label class="lbl">Sleep (hrs)</label><input type="number" class="fld" id="manSleep" placeholder="e.g. 7.5" step="0.5"></div>
+          <div><label class="lbl">Weight (kg)</label><input type="number" class="fld" id="manWeight" placeholder="e.g. 65.2" step="0.1"></div>
+          <div><label class="lbl">Date</label><input type="date" class="fld" id="manDate"></div>
+        </div>
+        <button class="btn bp bsm" onclick="saveManualSH()">+ Save Entry</button>
+      </div>
+    </div>
+
+    <!-- HISTORY TABLE -->
+    <div class="card">
+      <div class="ct">📋 Health History Log</div>
+      <div id="shHistoryTable" style="font-size:.82rem;color:var(--light);text-align:center;padding:14px">
+        No history yet. Import or manually log data above! 🌸
+      </div>
+    </div>
+
+  </div><!-- end samsungTab -->
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     VA JOURNEY
+═══════════════════════════════════════ -->
+<div id="va" class="sec">
+<div class="pw">
+  <div class="sh">💼 VA Journey Roadmap</div>
+  <p class="ss">Your step-by-step guide to becoming a skilled, in-demand Virtual Assistant 🌸</p>
+
+  <div class="itabs">
+    <button class="itab active" onclick="showInner('vaRoadmap','vatabs',this)">🗺 Roadmap</button>
+    <button class="itab" onclick="showInner('vaUpskill','vatabs',this)">📚 Upskill Existing</button>
+  </div>
+
+  <!-- ROADMAP -->
+  <div id="vaRoadmap" class="isec active">
+
+    <!-- PHASE 1 -->
+    <div class="va-phase">
+      <div class="va-dot" style="background:linear-gradient(135deg,#f9a8d4,#f472b6)">1</div>
+      <div class="va-card">
+        <div class="va-phase-lbl" style="color:var(--p500)">🌸 Phase 1 · Weeks 1–4 · Priority: HIGH</div>
+        <div class="va-phase-title">GHL (GoHighLevel) Mastery — Your #1 Priority</div>
+        <div class="skills-row">
+          <span class="sp sp-pk">GHL CRM</span>
+          <span class="sp sp-pk">Funnels</span>
+          <span class="sp sp-pk">Automations</span>
+          <span class="sp sp-pk">Pipelines</span>
+        </div>
+        <div class="va-tasks">
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Create free GHL trial account + explore dashboard</div>
+            <div class="vt-sub">Understand CRM, contacts, pipelines basics</div>
+            <a href="https://www.youtube.com/watch?v=p3bASzU2A8g" target="_blank" class="yt-sm">▶ GHL Complete Beginner Tutorial</a></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Learn to build a simple sales funnel in GHL</div>
+            <div class="vt-sub">Landing page → form → thank you page flow</div>
+            <a href="https://www.youtube.com/watch?v=6RQXwJu7p4g" target="_blank" class="yt-sm">▶ Build Your First GHL Funnel</a></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Set up an automated email + SMS workflow</div>
+            <div class="vt-sub">Trigger → action → condition flow</div>
+            <a href="https://www.youtube.com/watch?v=GwLkMNhWcFs" target="_blank" class="yt-sm">▶ GHL Automation Tutorial</a></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Complete GHL University (free inside GHL)</div>
+            <div class="vt-sub">All certification modules inside your GHL account</div></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Create a mock client account — practice full setup</div>
+            <div class="vt-sub">Build a complete funnel + automation for portfolio</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="va-phase">
+      <div class="va-dot" style="background:linear-gradient(135deg,#fde68a,#fbbf24)">2</div>
+      <div class="va-card">
+        <div class="va-phase-lbl" style="color:var(--gold-dk)">🏗 Phase 2 · Weeks 5–8 · Priority: HIGH</div>
+        <div class="va-phase-title">Construction VA — Your Second Specialization</div>
+        <div class="skills-row">
+          <span class="sp sp-gd">AutoCAD 3.5/5</span>
+          <span class="sp sp-gd">SketchUp 3.5/5</span>
+          <span class="sp sp-sk">Takeoffs</span>
+          <span class="sp sp-sk">Bid Documents</span>
+        </div>
+        <div class="va-tasks">
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Upskill AutoCAD to 4.5/5 — advanced 2D drafting</div>
+            <a href="https://www.youtube.com/watch?v=L-oqGaYM7mk" target="_blank" class="yt-sm">▶ AutoCAD 2024 Full Course</a></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Upskill SketchUp to 4/5 — 3D modeling for construction</div>
+            <a href="https://www.youtube.com/watch?v=JN9S5BNaXEM" target="_blank" class="yt-sm">▶ SketchUp Beginner to Pro</a></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Learn construction quantity takeoffs + estimating</div>
+            <a href="https://www.youtube.com/watch?v=UVt7QP-AaHQ" target="_blank" class="yt-sm">▶ Construction Takeoff Tutorial</a></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Learn to read and mark up construction drawings</div>
+            <a href="https://www.youtube.com/watch?v=UzrJCfGfb6U" target="_blank" class="yt-sm">▶ How to Read Construction Plans</a></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Create sample construction VA work for portfolio (AutoCAD + SketchUp samples)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="va-phase">
+      <div class="va-dot" style="background:linear-gradient(135deg,#a5f3fc,#7dd3fc)">3</div>
+      <div class="va-card">
+        <div class="va-phase-lbl" style="color:var(--sky-dk)">🤖 Phase 3 · Month 2–3</div>
+        <div class="va-phase-title">AI, Automations & SMM</div>
+        <div class="skills-row">
+          <span class="sp sp-sk">Make.com</span>
+          <span class="sp sp-sk">Zapier</span>
+          <span class="sp sp-sk">ChatGPT</span>
+          <span class="sp sp-sk">SMM</span>
+          <span class="sp sp-pk">CapCut</span>
+        </div>
+        <div class="va-tasks">
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Learn Make.com (Integromat) basics — connect apps</div>
+            <a href="https://www.youtube.com/watch?v=AkMiXtBkuoQ" target="_blank" class="yt-sm">▶ Make.com Full Beginner Tutorial</a></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Learn AI prompt engineering for VA tasks</div>
+            <a href="https://www.youtube.com/watch?v=jC4v5AS4RIM" target="_blank" class="yt-sm">▶ ChatGPT for Virtual Assistants</a></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Learn Social Media Management (SMM) basics</div>
+            <a href="https://www.youtube.com/watch?v=r1IXlgS3P5c" target="_blank" class="yt-sm">▶ SMM for Beginners 2024</a></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Upskill CapCut to 4/5 — short-form video editing</div>
+            <a href="https://www.youtube.com/watch?v=4K2P8xOiMtQ" target="_blank" class="yt-sm">▶ CapCut Tutorial for Social Media</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="va-phase">
+      <div class="va-dot" style="background:linear-gradient(135deg,#bbf7d0,#86efac)">4</div>
+      <div class="va-card">
+        <div class="va-phase-lbl" style="color:var(--sage-dk)">🚀 Phase 4 · Month 3+</div>
+        <div class="va-phase-title">Media Buyer + Launch Your VA Business</div>
+        <div class="skills-row">
+          <span class="sp sp-sg">Meta Ads</span>
+          <span class="sp sp-sg">Google Ads</span>
+          <span class="sp sp-sg">Freelance</span>
+          <span class="sp sp-sg">Portfolio</span>
+        </div>
+        <div class="va-tasks">
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Learn Meta Ads (Facebook/Instagram) basics</div>
+            <a href="https://www.youtube.com/watch?v=1UU3knmunMo" target="_blank" class="yt-sm">▶ Meta Ads Complete Tutorial</a></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Create full VA service menu + pricing</div>
+            <div class="vt-sub">GHL VA, Construction VA, SMM packages</div></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Set up profile on Upwork, OnlineJobs.ph or Fiverr</div></div>
+          </div>
+          <div class="vt" onclick="toggleVT(this)">
+            <div class="vt-ck">✓</div>
+            <div><div class="vt-txt">Land first paying VA client 🎉</div>
+            <div class="vt-sub">Congratulations — you're officially a VA!</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- UPSKILL EXISTING -->
+  <div id="vaUpskill" class="isec">
+    <div class="card">
+      <div class="ct">📚 Upskill Your Existing Skills</div>
+      <p style="font-size:.82rem;color:var(--light);margin-bottom:14px">Your current skills are already valuable! Level them up to stand out as a VA 🌸</p>
+
+      <div class="sk-row">
+        <div class="sk-icon">📄</div>
+        <div class="sk-info">
+          <div class="sk-name">MS Office Suite</div>
+          <div class="sk-lv">Current: 4/5 → Target: 5/5</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:80%"></div></div>
+        </div>
+        <div class="sk-links">
+          <a href="https://www.youtube.com/watch?v=S2RBVBfgMDk" target="_blank" class="yt-sm">▶ Excel Advanced</a>
+          <a href="https://www.youtube.com/watch?v=bSmGRnHjHAM" target="_blank" class="yt-sm">▶ Word Templates</a>
+        </div>
+      </div>
+
+      <div class="sk-row">
+        <div class="sk-icon">🌐</div>
+        <div class="sk-info">
+          <div class="sk-name">Google Workspace</div>
+          <div class="sk-lv">Current: 4/5 → Target: 5/5</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:80%"></div></div>
+        </div>
+        <div class="sk-links">
+          <a href="https://www.youtube.com/watch?v=OoFgjmfT_y4" target="_blank" class="yt-sm">▶ Google Sheets Pro</a>
+          <a href="https://www.youtube.com/watch?v=bGrXyBqRhCo" target="_blank" class="yt-sm">▶ Google Apps Script</a>
+        </div>
+      </div>
+
+      <div class="sk-row">
+        <div class="sk-icon">📐</div>
+        <div class="sk-info">
+          <div class="sk-name">AutoCAD</div>
+          <div class="sk-lv">Current: 3.5/5 → Target: 4.5/5</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:70%"></div></div>
+        </div>
+        <div class="sk-links">
+          <a href="https://www.youtube.com/watch?v=L-oqGaYM7mk" target="_blank" class="yt-sm">▶ AutoCAD Full Course</a>
+        </div>
+      </div>
+
+      <div class="sk-row">
+        <div class="sk-icon">🏠</div>
+        <div class="sk-info">
+          <div class="sk-name">SketchUp</div>
+          <div class="sk-lv">Current: 3.5/5 → Target: 4/5</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:70%"></div></div>
+        </div>
+        <div class="sk-links">
+          <a href="https://www.youtube.com/watch?v=JN9S5BNaXEM" target="_blank" class="yt-sm">▶ SketchUp Tutorial</a>
+        </div>
+      </div>
+
+      <div class="sk-row">
+        <div class="sk-icon">🎨</div>
+        <div class="sk-info">
+          <div class="sk-name">Canva</div>
+          <div class="sk-lv">Current: 3.8/5 → Target: 4.5/5</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:76%"></div></div>
+        </div>
+        <div class="sk-links">
+          <a href="https://www.youtube.com/watch?v=g_cILBqL_jM" target="_blank" class="yt-sm">▶ Canva Pro Tips</a>
+        </div>
+      </div>
+
+      <div class="sk-row">
+        <div class="sk-icon">🎬</div>
+        <div class="sk-info">
+          <div class="sk-name">CapCut</div>
+          <div class="sk-lv">Current: 2/5 → Target: 4/5</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:40%"></div></div>
+        </div>
+        <div class="sk-links">
+          <a href="https://www.youtube.com/watch?v=4K2P8xOiMtQ" target="_blank" class="yt-sm">▶ CapCut Full Tutorial</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+// ══ NAV ══
+function showSec(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ══ INNER TABS ══
+function showInner(id,group,btn){
+  document.querySelectorAll('#'+group+' .isec, .isec').forEach(s=>{
+    if(s.closest('.sec.active')) s.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+  btn.closest('.itabs').querySelectorAll('.itab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ══ TOAST ══
+function toast(msg='✓ Saved!'){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+// ══ PROFILE ══
+function toggleProfileForm(){
+  const f=document.getElementById('profileForm');
+  f.classList.toggle('open');
+}
+function saveProfile(){
+  const name=document.getElementById('pName').value;
+  const age=document.getElementById('pAge').value;
+  const sex=document.getElementById('pSex').value;
+  const weight=parseFloat(document.getElementById('pWeight').value);
+  const wUnit=document.getElementById('pWeightUnit').value;
+  const height=parseFloat(document.getElementById('pHeight').value);
+  const hUnit=document.getElementById('pHeightUnit').value;
+  const goalW=document.getElementById('pGoalWeight').value;
+  const pp=document.getElementById('pPostpartum').value;
+  const goal=document.getElementById('pGoal').value;
+
+  if(name){
+    document.getElementById('displayName').textContent='Hello, '+name+'! 🌸';
+    document.getElementById('avatarEmoji').textContent=name.charAt(0).toUpperCase();
+  }
+  if(goal) document.getElementById('displayTagline').textContent='"'+goal+'"';
+  else if(pp) document.getElementById('displayTagline').textContent=pp+' · On my wellness journey 🌸';
+
+  const statsRow=document.getElementById('statsRow');
+  statsRow.style.display='grid';
+
+  if(age) document.getElementById('dispAge').textContent=age+'yr';
+  if(weight && !isNaN(weight)){
+    document.getElementById('dispWeight').textContent=weight;
+    document.getElementById('dispWeightUnit').textContent=wUnit;
+  }
+  if(height && !isNaN(height)){
+    document.getElementById('dispHeight').textContent=height;
+    document.getElementById('dispHeightUnit').textContent=hUnit;
+  }
+
+  // BMI calc
+  if(weight && height && !isNaN(weight) && !isNaN(height)){
+    let hM=hUnit==='cm'?height/100:height*0.3048;
+    let wKg=wUnit==='kg'?weight:weight*0.453592;
+    const bmi=wKg/(hM*hM);
+    const bmiRound=bmi.toFixed(1);
+    document.getElementById('dispBMI').textContent=bmiRound;
+    document.getElementById('bmiNum').textContent=bmiRound;
+    const bmiResult=document.getElementById('bmiResult');
+    bmiResult.style.display='flex';
+    let label,tip,cls;
+    if(bmi<18.5){label='Underweight';tip='Focus on nourishing foods and building strength.';cls='bmi-under bsk';}
+    else if(bmi<25){label='Healthy Weight';tip='Great job! Maintain with balanced nutrition and exercise.';cls='bmi-normal bsg';}
+    else if(bmi<30){label='Overweight';tip='Gentle progress with 16:8, walking and DR-safe exercise!';cls='bmi-over bgd';}
+    else{label='Obese';tip='Start slow, be consistent — every positive step counts!';cls='bmi-obese';}
+    document.getElementById('bmiLabel').textContent=label;
+    document.getElementById('bmiTip').textContent=tip;
+    const tag=document.getElementById('bmiTag');
+    tag.textContent=label; tag.className='bdg '+cls;
+
+    // Weight goal info
+    if(goalW){
+      const tolose=(wKg-parseFloat(goalW)).toFixed(1);
+      const weeks=Math.ceil((wKg-parseFloat(goalW))/0.75);
+      document.getElementById('weightGoalInfo').innerHTML=
+        '<strong style="color:var(--p500)">Goal: '+goalW+' '+wUnit+'</strong><br>'+
+        '<span style="color:#555">~'+tolose+' kg to lose at healthy pace<br>~'+weeks+' weeks at 0.75 kg/week 🌸</span>';
+    }
+  }
+
+  document.getElementById('profileForm').classList.remove('open');
+  toast('Profile saved! 🌸');
+}
+
+// ══ AFFIRMATIONS ══
+const affirmations=[
+  '"You are stronger than you know, and more beautiful than you see."',
+  '"Every small step forward is progress. You\'re doing amazing, mama! 🌸"',
+  '"Your body grew a human. Give it grace, give it time, give it love."',
+  '"Healing is not linear. You are doing your best and that is enough."',
+  '"You are building something beautiful — in your body and your career."',
+  '"Rest is productive. Recovery is strength. You deserve both."',
+  '"One day at a time. One meal at a time. One walk at a time. 💪"',
+  '"Your future self is proud of everything you are doing right now."'
+];
+let affIdx=0;
+function newAffirmation(){
+  affIdx=(affIdx+1)%affirmations.length;
+  document.getElementById('affirmation').textContent=affirmations[affIdx];
+}
+
+// ══ GOAL MAP ══
+function togglePhase(hdr){
+  hdr.classList.toggle('open');
+  const mg=hdr.nextElementSibling;
+  mg.classList.toggle('open');
+}
+function toggleMG(el,groupId){
+  el.classList.toggle('checked');
+  updateGoalStats();
+}
+function updateGoalStats(){
+  const phases=[{id:'mgg1',pi:'pph1',total:6},{id:'mgg2',pi:'pph2',total:6},{id:'mgg3',pi:'pph3',total:6},{id:'mgg4',pi:'pph4',total:5}];
+  let totalDone=0,totalAll=23;
+  phases.forEach(p=>{
+    const done=document.querySelectorAll('#'+p.id+' .mg.checked').length;
+    totalDone+=done;
+    document.getElementById(p.pi).textContent=done+' / '+p.total+' done';
+  });
+  document.getElementById('gmDone').textContent=totalDone;
+  document.getElementById('gmLeft').textContent=totalAll-totalDone;
+  const pct=Math.round((totalDone/totalAll)*100);
+  document.getElementById('gmPct').textContent=pct+'%';
+  document.getElementById('gmBar').style.width=pct+'%';
+}
+
+// ══ WATER TRACKER ══
+let waterFilled=0;
+function initWater(){
+  const c=document.getElementById('waterCups');
+  c.innerHTML='';
+  for(let i=0;i<8;i++){
+    const d=document.createElement('div');
+    d.className='wcup'+(i<waterFilled?' filled':'');
+    d.innerHTML='<span>💧</span>';
+    d.onclick=()=>toggleWater(i);
+    c.appendChild(d);
+  }
+  document.getElementById('waterCount').textContent=waterFilled;
+  document.getElementById('waterMl').textContent=(waterFilled*250)+'ml';
+  document.getElementById('waterProg').style.width=(waterFilled/8*100)+'%';
+}
+function toggleWater(i){
+  waterFilled=waterFilled===i+1?i:i+1;
+  initWater();
+  if(waterFilled>=8) toast('💧 Goal reached! 8 glasses today!');
+}
+function resetWater(){waterFilled=0;initWater();}
+initWater();
+
+// ══ EXERCISE ══
+let exDone=0;
+function toggleEx(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('done-ex');
+  exDone=document.querySelectorAll('.ex-item.done-ex').length;
+  document.getElementById('exDone').textContent=exDone;
+  document.getElementById('exProg').style.width=(exDone/6*100)+'%';
+  if(exDone===6) toast('💪 All exercises done! Amazing! 🌸');
+}
+
+// ══ CHORES ══
+function toggleChore(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('done-ch');
+  updateChoreProgress();
+}
+function updateChoreProgress(){
+  const allChores=document.querySelectorAll('[id^="ch"]');
+  const done=document.querySelectorAll('[id^="ch"].done-ch').length;
+  document.getElementById('choresDone').textContent=done;
+  document.getElementById('choresProg').style.width=(done/14*100)+'%';
+  if(done>=14) toast('🏠 All daily chores done! Superwoman! 🌸');
+}
+function resetChores(){
+  document.querySelectorAll('[id^="ch"]').forEach(el=>el.classList.remove('done-ch'));
+  updateChoreProgress();
+}
+
+// ══ RECIPES ══
+const recipes=[
+  {title:'Lemon Herb Baked Salmon',tag:'High Protein · Low Carb · ~420 kcal',
+   ing:['2 salmon fillets (150g each)','2 tbsp olive oil','2 cloves garlic, minced','Juice of 1 lemon','Fresh dill or parsley','Salt & pepper','1 cup steamed broccoli'],
+   steps:['Preheat oven to 200°C','Mix olive oil, garlic, lemon juice','Coat salmon, season well','Bake 12–15 min until flaky','Serve with steamed broccoli'],cal:420},
+  {title:'Quinoa Power Bowl',tag:'High Fiber · Balanced Macros · ~380 kcal',
+   ing:['½ cup quinoa (dry)','1 cup mixed greens','½ avocado, sliced','1 boiled egg','Cherry tomatoes','Cucumber','Tahini dressing (1 tbsp)'],
+   steps:['Cook quinoa per pack instructions','Arrange greens in bowl','Top with egg, avocado, veggies','Drizzle tahini dressing','Season with lemon + salt'],cal:380},
+  {title:'Turkey & Veggie Stir-fry',tag:'High Protein · Low Calorie · ~360 kcal',
+   ing:['150g ground turkey','1 cup mixed veg (bell peppers, broccoli)','2 tbsp soy sauce (low sodium)','1 tsp sesame oil','2 cloves garlic','½ cup cauliflower rice'],
+   steps:['Cook cauliflower rice aside','Sauté garlic in sesame oil','Brown turkey, add vegetables','Add soy sauce, cook 5 min','Serve over cauliflower rice'],cal:360},
+  {title:'Greek Yogurt Smoothie Bowl',tag:'Probiotic · Postpartum Friendly · ~290 kcal',
+   ing:['1 cup Greek yogurt (full fat)','½ banana, frozen','¼ cup frozen berries','1 tbsp chia seeds','1 tbsp honey','Granola (2 tbsp) for topping'],
+   steps:['Blend yogurt, banana, berries','Pour into bowl','Top with chia seeds, honey','Add granola just before eating','Eat within eating window'],cal:290},
+  {title:'Chicken & Sweet Potato Bowl',tag:'Postpartum Power Meal · ~450 kcal',
+   ing:['150g chicken breast, grilled','1 small sweet potato, roasted','½ cup black beans','Salsa or pico de gallo','½ avocado','Lime juice + cumin'],
+   steps:['Roast sweet potato cubes 25 min at 200°C','Season + grill chicken breast','Warm black beans','Assemble bowl: potato, chicken, beans','Top with avocado + salsa'],cal:450},
+  {title:'Zucchini Noodles with Pesto',tag:'Low Carb · Light & Fresh · ~310 kcal',
+   ing:['2 medium zucchini (spiralized)','3 tbsp homemade or store pesto','1 cup cherry tomatoes, halved','Parmesan cheese (2 tbsp)','Pine nuts (1 tbsp)','Salt & pepper'],
+   steps:['Spiralize zucchini into noodles','Sauté lightly in pan (2 min)','Toss with pesto off heat','Add cherry tomatoes, season','Top with parmesan + pine nuts'],cal:310},
+  {title:'Egg & Veggie Frittata',tag:'High Protein · DR-Recovery Friendly · ~340 kcal',
+   ing:['4 large eggs','¼ cup milk','½ cup spinach','½ cup mushrooms, sliced','¼ cup cherry tomatoes','Feta cheese (2 tbsp)','Olive oil, salt, pepper'],
+   steps:['Preheat oven to 180°C','Beat eggs + milk + seasoning','Sauté veggies in oven-safe pan','Pour egg mixture over veggies','Bake 12–15 min until set'],cal:340}
+];
+let recipeIdx=0;
+function renderRecipe(){
+  const r=recipes[recipeIdx];
+  document.getElementById('recipeBox').innerHTML=`
+  <div class="rec-card">
+    <div class="rec-title">${r.title}</div>
+    <div class="rec-tag">📅 Today's Recipe · ${r.tag}</div>
+    <div class="rec-grid">
+      <div class="rec-sec"><h4>🛒 Ingredients</h4><ul>${r.ing.map(i=>`<li>${i}</li>`).join('')}</ul></div>
+      <div class="rec-sec"><h4>👩‍🍳 Steps</h4><ol style="margin-left:13px">${r.steps.map(s=>`<li style="margin-bottom:4px;color:#555;font-size:.79rem">${s}</li>`).join('')}</ol></div>
+    </div>
+    <div class="rec-cal">🔥 ~${r.cal} kcal &nbsp;·&nbsp; Postpartum safe · Fits 16:8 window</div>
+  </div>`;
+}
+function nextRecipe(){recipeIdx=(recipeIdx+1)%recipes.length;renderRecipe();}
+renderRecipe();
+
+// ══ PHOTO CALORIE COUNTER ══
+function handleFoodPhoto(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const prev=document.getElementById('photoPreview');
+    prev.src=ev.target.result;prev.style.display='block';
+    const res=document.getElementById('calorieResult');
+    res.style.display='block';
+    document.getElementById('calorieText').innerHTML=
+      '⏳ Analyzing your meal...<br><br>'+
+      '<em style="color:#aaa;font-size:.78rem">For accurate AI calorie counting, connect this to the Claude API or use an app like MyFitnessPal to scan your meal. This demo shows a placeholder estimate.</em><br><br>'+
+      '📊 <strong>Estimated range:</strong> 300–500 kcal (typical plate)<br>'+
+      '💡 <strong>Tip:</strong> Log meals in a dedicated tracking app like MyFitnessPal for precise counts.';
+  };
+  reader.readAsDataURL(file);
+}
+
+// ══ FASTING TIMER ══
+let fastStart=null,fastInterval=null;
+function startFast(){
+  fastStart=new Date();
+  document.getElementById('fastStartBtn').disabled=true;
+  document.getElementById('fastEndBtn').disabled=false;
+  document.getElementById('fastStatus').textContent='Fasting...';
+  fastInterval=setInterval(updateFastTimer,1000);
+  toast('⏱ Fast started! You\'ve got this! 🌸');
+}
+function updateFastTimer(){
+  if(!fastStart)return;
+  const elapsed=Math.floor((new Date()-fastStart)/1000);
+  const h=Math.floor(elapsed/3600).toString().padStart(2,'0');
+  const m=Math.floor((elapsed%3600)/60).toString().padStart(2,'0');
+  const s=(elapsed%60).toString().padStart(2,'0');
+  document.getElementById('fastTimer').textContent=h+':'+m+':'+s;
+  const deg=Math.min((elapsed/57600)*360,360);
+  document.getElementById('fastRing').style.background=`conic-gradient(#f9548a ${deg}deg,#ffb3ce ${deg}deg)`;
+  if(elapsed>=57600){clearInterval(fastInterval);document.getElementById('fastStatus').textContent='16hr Complete! 🎉';toast('🎉 16hr fast complete! Amazing!');}
+}
+function endFast(){
+  clearInterval(fastInterval);
+  document.getElementById('fastStartBtn').disabled=false;
+  document.getElementById('fastEndBtn').disabled=true;
+  document.getElementById('fastStatus').textContent='Fast ended';
+  toast('Fast ended. Eat mindfully! 🥗');
+}
+function resetFast(){
+  clearInterval(fastInterval);fastStart=null;
+  document.getElementById('fastTimer').textContent='00:00:00';
+  document.getElementById('fastStatus').textContent='Not started';
+  document.getElementById('fastRing').style.background='conic-gradient(#f9548a 0deg,#ffb3ce 0deg)';
+  document.getElementById('fastStartBtn').disabled=false;
+  document.getElementById('fastEndBtn').disabled=true;
+}
+
+// ══ WEIGHT LOG ══
+let weightLog=[];
+// Set default date
+document.getElementById('wDate').valueAsDate=new Date();
+function logWeight(){
+  const d=document.getElementById('wDate').value;
+  const v=parseFloat(document.getElementById('wVal').value);
+  const n=document.getElementById('wNote').value;
+  if(!d||isNaN(v)){toast('Please enter date and weight! 🌸');return;}
+  weightLog.push({date:d,val:v,note:n});
+  weightLog.sort((a,b)=>a.date>b.date?1:-1);
+  document.getElementById('wVal').value='';
+  document.getElementById('wNote').value='';
+  renderWeightHistory();
+  drawWeightChart();
+  toast('⚖️ Weight logged! Keep going! 🌸');
+}
+function renderWeightHistory(){
+  const el=document.getElementById('weightHistory');
+  if(!weightLog.length){el.innerHTML='<div style="font-size:.83rem;color:var(--light);text-align:center;padding:16px">No entries yet 🌸</div>';return;}
+  el.innerHTML=weightLog.slice().reverse().map((e,i,arr)=>{
+    const prev=arr[i+1];
+    let diff='';
+    if(prev){const d=(e.val-prev.val).toFixed(1);diff=`<span class="we-diff ${d<=0?'diff-dn':'diff-up'}">${d<=0?'▼':'▲'} ${Math.abs(d)} kg</span>`;}
+    return `<div class="weight-entry"><span class="we-date">📅 ${e.date}${e.note?'  ·  '+e.note:''}</span>${diff}<span class="we-val">${e.val} kg</span></div>`;
+  }).join('');
+}
+function drawWeightChart(){
+  const canvas=document.getElementById('weightChart');
+  const ctx=canvas.getContext('2d');
+  const W=canvas.offsetWidth||300; canvas.width=W; canvas.height=160;
+  ctx.clearRect(0,0,W,160);
+  if(weightLog.length<2)return;
+  const vals=weightLog.map(e=>e.val);
+  const mn=Math.min(...vals)-1,mx=Math.max(...vals)+1;
+  const n=weightLog.length;
+  ctx.fillStyle='#fce7f3';ctx.fillRect(0,0,W,160);
+  // Grid lines
+  for(let i=0;i<=4;i++){const y=20+i*28;ctx.beginPath();ctx.strokeStyle='#ffb3ce44';ctx.lineWidth=1;ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  // Line
+  ctx.beginPath();ctx.strokeStyle='#f472b6';ctx.lineWidth=3;ctx.lineJoin='round';
+  weightLog.forEach((e,i)=>{
+    const x=30+(i/(n-1))*(W-60);const y=20+((mx-e.val)/(mx-mn))*110;
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  // Dots
+  weightLog.forEach((e,i)=>{
+    const x=30+(i/(n-1))*(W-60);const y=20+((mx-e.val)/(mx-mn))*110;
+    ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fillStyle='#f472b6';ctx.fill();
+    ctx.fillStyle='var(--dark)';ctx.font='bold 10px Nunito,sans-serif';ctx.textAlign='center';ctx.fillText(e.val,x,y-10);
+    ctx.fillStyle='#aaa';ctx.font='9px Nunito,sans-serif';ctx.fillText(e.date.slice(5),x,150);
+  });
+}
+
+// ══ PHOTO LOG ══
+let currentPhotoSlot=0;
+function uploadPhoto(idx){currentPhotoSlot=idx;document.getElementById('photoInput').click();}
+function handlePhotoUpload(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const slot=document.getElementById('pslot'+currentPhotoSlot);
+    slot.innerHTML=`<img src="${ev.target.result}" alt="Week ${currentPhotoSlot+1}">`;
+    toast('📸 Photo saved for Week '+(currentPhotoSlot+1)+'! 🌸');
+  };
+  reader.readAsDataURL(file);
+  e.target.value='';
+}
+
+// ══ VA TASKS ══
+function toggleVT(el){
+  el.classList.toggle('done-vt');
+  toast(el.classList.contains('done-vt')?'✅ Task complete! 🌸':'↩ Task unmarked');
+  saveState();
+}
+
+// ══════════════════════════════════════════════
+// LOCALSTORAGE PERSISTENCE — saves everything!
+// ══════════════════════════════════════════════
+function saveState() {
+  try {
+    // Water
+    localStorage.setItem('waterFilled', waterFilled);
+    // Weight log
+    localStorage.setItem('weightLog', JSON.stringify(weightLog));
+    // Exercise checkboxes
+    const exStates = {};
+    ['ex1','ex2','ex3','ex4','ex5','ex6'].forEach(id => {
+      exStates[id] = document.getElementById(id)?.classList.contains('done-ex') || false;
+    });
+    localStorage.setItem('exStates', JSON.stringify(exStates));
+    // Chores
+    const choreStates = {};
+    document.querySelectorAll('[id^="ch"]').forEach(el => {
+      choreStates[el.id] = el.classList.contains('done-ch');
+    });
+    localStorage.setItem('choreStates', JSON.stringify(choreStates));
+    // Goal map
+    const mgStates = {};
+    document.querySelectorAll('.mg').forEach((el, i) => {
+      mgStates['mg'+i] = el.classList.contains('checked');
+    });
+    localStorage.setItem('mgStates', JSON.stringify(mgStates));
+    // VA tasks
+    const vtStates = {};
+    document.querySelectorAll('.vt').forEach((el, i) => {
+      vtStates['vt'+i] = el.classList.contains('done-vt');
+    });
+    localStorage.setItem('vtStates', JSON.stringify(vtStates));
+    // Profile
+    const profile = {
+      name: document.getElementById('pName')?.value || '',
+      age: document.getElementById('pAge')?.value || '',
+      sex: document.getElementById('pSex')?.value || '',
+      weight: document.getElementById('pWeight')?.value || '',
+      wUnit: document.getElementById('pWeightUnit')?.value || 'kg',
+      height: document.getElementById('pHeight')?.value || '',
+      hUnit: document.getElementById('pHeightUnit')?.value || 'cm',
+      goalWeight: document.getElementById('pGoalWeight')?.value || '',
+      postpartum: document.getElementById('pPostpartum')?.value || '',
+      goal: document.getElementById('pGoal')?.value || '',
+    };
+    localStorage.setItem('profileData', JSON.stringify(profile));
+    // Save date for daily reset detection
+    localStorage.setItem('lastSaveDate', new Date().toDateString());
+  } catch(e) { console.warn('Save error:', e); }
+}
+
+function loadState() {
+  try {
+    // Check if it's a new day — reset daily items
+    const lastDate = localStorage.getItem('lastSaveDate');
+    const today = new Date().toDateString();
+    const isNewDay = lastDate && lastDate !== today;
+
+    // Water
+    if (!isNewDay) {
+      waterFilled = parseInt(localStorage.getItem('waterFilled') || '0');
+    }
+    initWater();
+
+    // Weight log
+    const savedWeights = localStorage.getItem('weightLog');
+    if (savedWeights) {
+      weightLog = JSON.parse(savedWeights);
+      renderWeightHistory();
+      setTimeout(drawWeightChart, 100);
+    }
+
+    // Exercise states (reset on new day)
+    if (!isNewDay) {
+      const exStates = JSON.parse(localStorage.getItem('exStates') || '{}');
+      Object.entries(exStates).forEach(([id, done]) => {
+        if (done) document.getElementById(id)?.classList.add('done-ex');
+      });
+      exDone = document.querySelectorAll('.ex-item.done-ex').length;
+      document.getElementById('exDone').textContent = exDone;
+      document.getElementById('exProg').style.width = (exDone/6*100)+'%';
+    }
+
+    // Chore states (reset on new day for daily chores)
+    if (!isNewDay) {
+      const choreStates = JSON.parse(localStorage.getItem('choreStates') || '{}');
+      Object.entries(choreStates).forEach(([id, done]) => {
+        if (done) document.getElementById(id)?.classList.add('done-ch');
+      });
+      updateChoreProgress();
+    }
+
+    // Goal map (persistent — never auto-reset)
+    const mgStates = JSON.parse(localStorage.getItem('mgStates') || '{}');
+    document.querySelectorAll('.mg').forEach((el, i) => {
+      if (mgStates['mg'+i]) el.classList.add('checked');
+    });
+    updateGoalStats();
+
+    // VA tasks (persistent)
+    const vtStates = JSON.parse(localStorage.getItem('vtStates') || '{}');
+    document.querySelectorAll('.vt').forEach((el, i) => {
+      if (vtStates['vt'+i]) el.classList.add('done-vt');
+    });
+
+    // Profile
+    const profile = JSON.parse(localStorage.getItem('profileData') || '{}');
+    if (profile.name) {
+      document.getElementById('pName').value = profile.name;
+      document.getElementById('pAge').value = profile.age || '';
+      document.getElementById('pSex').value = profile.sex || '';
+      document.getElementById('pWeight').value = profile.weight || '';
+      document.getElementById('pWeightUnit').value = profile.wUnit || 'kg';
+      document.getElementById('pHeight').value = profile.height || '';
+      document.getElementById('pHeightUnit').value = profile.hUnit || 'cm';
+      document.getElementById('pGoalWeight').value = profile.goalWeight || '';
+      document.getElementById('pPostpartum').value = profile.postpartum || '';
+      document.getElementById('pGoal').value = profile.goal || '';
+      // Re-render saved profile
+      saveProfile();
+    }
+
+    if (isNewDay) {
+      toast('🌸 Good morning! New day, new start!');
+    }
+  } catch(e) { console.warn('Load error:', e); }
+}
+
+// Patch all interactive functions to also save
+const _origToggleMG = toggleMG;
+toggleMG = function(el, g) { _origToggleMG(el, g); saveState(); };
+
+const _origToggleEx = toggleEx;
+toggleEx = function(id) { _origToggleEx(id); saveState(); };
+
+const _origToggleChore = toggleChore;
+toggleChore = function(id) { _origToggleChore(id); saveState(); };
+
+const _origLogWeight = logWeight;
+logWeight = function() { _origLogWeight(); saveState(); };
+
+const _origSaveProfile = saveProfile;
+saveProfile = function() { _origSaveProfile(); saveState(); };
+
+const _origToggleWater = toggleWater;
+toggleWater = function(i) { _origToggleWater(i); saveState(); };
+
+// ══ SERVICE WORKER REGISTRATION ══
+let deferredPrompt = null;
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.log('SW error:', err));
+  });
+}
+
+// Install prompt
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show banner after 3 seconds
+  setTimeout(() => {
+    const banner = document.getElementById('installBanner');
+    if (banner && !localStorage.getItem('installDismissed')) {
+      banner.classList.remove('hidden');
+    }
+  }, 3000);
+});
+
+document.getElementById('installBtn')?.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') toast('🌸 App installed! Find it on your home screen!');
+    deferredPrompt = null;
+  }
+  document.getElementById('installBanner').classList.add('hidden');
+});
+
+function dismissInstall() {
+  document.getElementById('installBanner').classList.add('hidden');
+  localStorage.setItem('installDismissed', '1');
+}
+
+// Offline / online detection
+function updateOnlineStatus() {
+  const badge = document.getElementById('offlineBadge');
+  if (!badge) return;
+  if (!navigator.onLine) {
+    badge.style.display = 'block';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+window.addEventListener('online', () => { updateOnlineStatus(); toast('✅ Back online!'); });
+window.addEventListener('offline', () => { updateOnlineStatus(); toast('📶 You\'re offline — app still works! 🌸'); });
+updateOnlineStatus();
+
+// ══ LOAD SAVED DATA ON START ══
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(loadState, 200);
+  setTimeout(loadSHData, 400);
+  // Set manual date default
+  const md = document.getElementById('manDate');
+  if (md) md.valueAsDate = new Date();
+});
+
+// ══════════════════════════════════════════════
+// SAMSUNG HEALTH IMPORT ENGINE
+// ══════════════════════════════════════════════
+let shData = {
+  steps: [], heartrate: [], sleep: [],
+  weight: [], calories: [], exercise: []
+};
+
+// Load persisted SH data
+function loadSHData() {
+  try {
+    const saved = localStorage.getItem('shData');
+    if (saved) { shData = JSON.parse(saved); renderSHDashboard(); }
+    const hist = localStorage.getItem('shHistory');
+    if (hist) { shHistory = JSON.parse(hist); renderSHHistory(); }
+  } catch(e){}
+}
+
+let shHistory = []; // manual + imported daily snapshots
+
+// Parse uploaded Samsung Health CSV files
+function parseSHFile(e, type) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const text = ev.target.result;
+    const rows = text.split('\n').filter(r => r.trim());
+    let parsed = [];
+
+    try {
+      // Samsung Health CSVs have metadata rows at top — find the actual header
+      let headerIdx = 0;
+      for (let i = 0; i < Math.min(10, rows.length); i++) {
+        if (rows[i].toLowerCase().includes('date') ||
+            rows[i].toLowerCase().includes('start_time') ||
+            rows[i].toLowerCase().includes('create_time')) {
+          headerIdx = i; break;
+        }
+      }
+      const headers = rows[headerIdx].split(',').map(h => h.trim().replace(/"/g,'').toLowerCase());
+      parsed = rows.slice(headerIdx + 1).map(row => {
+        const vals = row.split(',').map(v => v.trim().replace(/"/g,''));
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = vals[i] || '');
+        return obj;
+      }).filter(r => Object.values(r).some(v => v));
+
+      shData[type] = parsed;
+      localStorage.setItem('shData', JSON.stringify(shData));
+
+      // Mark card as uploaded
+      const cardMap = {steps:'shSteps',heartrate:'shHR',sleep:'shSleep',weight:'shWeight',calories:'shCal',exercise:'shExercise'};
+      const statusMap = {steps:'shStepsStatus',heartrate:'shHRStatus',sleep:'shSleepStatus',weight:'shWeightStatus',calories:'shCalStatus',exercise:'shExerciseStatus'};
+      document.getElementById(cardMap[type])?.closest('.sh-upload-card')?.classList.add('uploaded');
+      const statusEl = document.getElementById(statusMap[type]);
+      if (statusEl) statusEl.textContent = `✅ ${parsed.length} records loaded`;
+
+      toast(`✅ ${type.charAt(0).toUpperCase()+type.slice(1)} data imported! (${parsed.length} records)`);
+    } catch(err) {
+      toast('⚠️ Could not parse file — try the manual entry below');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function applySHData() {
+  renderSHDashboard();
+  toast('🌸 Samsung Health data applied to dashboard!');
+}
+
+function clearSHData() {
+  shData = { steps:[], heartrate:[], sleep:[], weight:[], calories:[], exercise:[] };
+  localStorage.removeItem('shData');
+  ['shStepsStatus','shHRStatus','shSleepStatus','shWeightStatus','shCalStatus','shExerciseStatus']
+    .forEach(id => { const el=document.getElementById(id); if(el) el.textContent='Tap to upload'; });
+  document.querySelectorAll('.sh-upload-card').forEach(c => c.classList.remove('uploaded'));
+  renderSHDashboard();
+  toast('🗑 Samsung Health data cleared');
+}
+
+// Helper: find column value by partial name match
+function findCol(row, ...keys) {
+  const k = Object.keys(row).find(h => keys.some(key => h.includes(key)));
+  return k ? row[k] : null;
+}
+
+// Get numeric value safely
+function numVal(v) { return parseFloat(v) || 0; }
+
+function renderSHDashboard() {
+  const now = new Date();
+  const hasAny = Object.values(shData).some(arr => arr.length > 0) || shHistory.length > 0;
+
+  // Last sync label
+  const syncEl = document.getElementById('shLastSync');
+  if (syncEl) {
+    syncEl.textContent = hasAny
+      ? `⌚ Last updated: ${now.toLocaleDateString()} ${now.toLocaleTimeString()} · Galaxy Watch via Samsung Health`
+      : 'No data imported yet. Upload your Samsung Health files above! 🌸';
+  }
+
+  // ── STEPS ──
+  let latestSteps = null, stepsWeek = [];
+  if (shData.steps.length) {
+    const sorted = [...shData.steps].sort((a,b) => {
+      const da = findCol(a,'date','time','create') || '';
+      const db = findCol(b,'date','time','create') || '';
+      return db.localeCompare(da);
+    });
+    const latest = sorted[0];
+    latestSteps = numVal(findCol(latest,'count','step','value'));
+    stepsWeek = sorted.slice(0,7).map(r => numVal(findCol(r,'count','step','value'))).reverse();
+  } else if (shHistory.length) {
+    const last = shHistory[shHistory.length-1];
+    latestSteps = last.steps || null;
+    stepsWeek = shHistory.slice(-7).map(r => r.steps || 0);
+  }
+  if (latestSteps !== null) {
+    document.getElementById('shStepsVal').textContent = latestSteps.toLocaleString();
+    const stepsGoal = 8000;
+    const pct = Math.min((latestSteps/stepsGoal)*100,100);
+    document.getElementById('shStepsGoal').textContent = latestSteps >= stepsGoal ? '🎉 Daily goal reached!' : `${stepsGoal-latestSteps} steps to goal`;
+    document.getElementById('shStepsProg').style.width = pct+'%';
+  }
+
+  // ── HEART RATE ──
+  let latestHR = null, hrWeek = [];
+  if (shData.heartrate.length) {
+    const sorted = [...shData.heartrate].sort((a,b)=>{
+      const da=findCol(a,'date','time','start')||'';const db=findCol(b,'date','time','start')||'';return db.localeCompare(da);
+    });
+    const vals = sorted.slice(0,50).map(r=>numVal(findCol(r,'heart_rate','value','bpm','rate'))).filter(v=>v>30&&v<220);
+    latestHR = vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length) : null;
+    hrWeek = sorted.slice(0,7).map(r=>numVal(findCol(r,'heart_rate','value','bpm','rate'))).filter(v=>v>30).reverse();
+  } else if (shHistory.length) {
+    latestHR = shHistory[shHistory.length-1].hr || null;
+    hrWeek = shHistory.slice(-7).map(r=>r.hr||0);
+  }
+  if (latestHR) {
+    document.getElementById('shHRVal').textContent = latestHR+' bpm';
+    let zone = latestHR < 60 ? '💙 Resting — excellent!' : latestHR < 80 ? '💚 Normal range' : latestHR < 100 ? '💛 Slightly elevated' : '🔴 Elevated — rest today';
+    document.getElementById('shHRZone').textContent = zone;
+  }
+
+  // ── CALORIES ──
+  let latestCal = null;
+  if (shData.calories.length) {
+    const sorted = [...shData.calories].sort((a,b)=>{
+      const da=findCol(a,'date','time')||'';const db=findCol(b,'date','time')||'';return db.localeCompare(da);
+    });
+    latestCal = numVal(findCol(sorted[0],'calorie','calories','value','burnt'));
+  } else if (shHistory.length) {
+    latestCal = shHistory[shHistory.length-1].calories || null;
+  }
+  if (latestCal) {
+    document.getElementById('shCalVal').textContent = Math.round(latestCal)+' kcal';
+    const calGoal = 400;
+    const calPct = Math.min((latestCal/calGoal)*100,100);
+    document.getElementById('shCalGoal').textContent = latestCal>=calGoal ? '🎉 Burn goal reached!' : `${calGoal-Math.round(latestCal)} kcal to goal`;
+    document.getElementById('shCalProg').style.width = calPct+'%';
+  }
+
+  // ── SLEEP ──
+  let latestSleep = null, sleepWeek = [];
+  if (shData.sleep.length) {
+    const sorted = [...shData.sleep].sort((a,b)=>{
+      const da=findCol(a,'start','date','time')||'';const db=findCol(b,'start','date','time')||'';return db.localeCompare(da);
+    });
+    const dur = numVal(findCol(sorted[0],'duration','total_time','sleep_time','efficiency'));
+    latestSleep = dur > 1440 ? (dur/3600000).toFixed(1) : dur > 24 ? (dur/60).toFixed(1) : dur > 0 ? dur.toFixed(1) : null;
+    sleepWeek = sorted.slice(0,7).map(r=>{const d=numVal(findCol(r,'duration','total_time','sleep_time'));return d>1440?(d/3600000):d>24?(d/60):d;}).reverse();
+  } else if (shHistory.length) {
+    latestSleep = shHistory[shHistory.length-1].sleep || null;
+    sleepWeek = shHistory.slice(-7).map(r=>r.sleep||0);
+  }
+  if (latestSleep) {
+    document.getElementById('shSleepVal').textContent = latestSleep+'h';
+    const hrs = parseFloat(latestSleep);
+    let q = hrs >= 8 ? '⭐ Excellent sleep!' : hrs >= 7 ? '✅ Good sleep' : hrs >= 6 ? '⚠️ Slightly short' : '😴 Rest more tonight';
+    document.getElementById('shSleepQuality').textContent = q;
+  }
+
+  // ── WEIGHT ──
+  let latestWeight = null;
+  if (shData.weight.length) {
+    const sorted = [...shData.weight].sort((a,b)=>{
+      const da=findCol(a,'date','time','create')||'';const db=findCol(b,'date','time','create')||'';return db.localeCompare(da);
+    });
+    latestWeight = numVal(findCol(sorted[0],'weight','value','body_weight'));
+    if (latestWeight > 0) {
+      // auto-log to weight tracker
+      const today = new Date().toISOString().split('T')[0];
+      const exists = weightLog.find(e=>e.date===today);
+      if (!exists) { weightLog.push({date:today,val:latestWeight,note:'📲 From Samsung Health'}); weightLog.sort((a,b)=>a.date>b.date?1:-1); renderWeightHistory(); setTimeout(drawWeightChart,100); }
+    }
+  } else if (shHistory.length) {
+    latestWeight = shHistory[shHistory.length-1].weight || null;
+  }
+  if (latestWeight) {
+    document.getElementById('shWeightVal').textContent = latestWeight.toFixed(1)+' kg';
+    const goalWEl = document.getElementById('pGoalWeight');
+    if (goalWEl?.value) {
+      const diff = (latestWeight - parseFloat(goalWEl.value)).toFixed(1);
+      document.getElementById('shWeightDiff').textContent = diff > 0 ? `${diff} kg to goal 💪` : '🎉 Goal reached!';
+    }
+  }
+
+  // ── EXERCISE ──
+  let exCount = null, exType = '';
+  if (shData.exercise.length) {
+    const recent = shData.exercise.slice(0,7);
+    exCount = recent.length;
+    const types = recent.map(r=>findCol(r,'exercise_type','type','activity')||'').filter(Boolean);
+    exType = types.slice(0,2).join(', ') || 'Various';
+  } else if (shHistory.length) {
+    exCount = shHistory.filter(r=>r.steps>5000).length;
+    exType = 'Active days';
+  }
+  if (exCount !== null) {
+    document.getElementById('shExVal').textContent = exCount;
+    document.getElementById('shExType').textContent = exType ? exType.slice(0,25) : 'Recent sessions';
+  }
+
+  // ── DRAW CHARTS ──
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const labels7 = shHistory.length >= 7
+    ? shHistory.slice(-7).map(r => r.date ? r.date.slice(5) : '—')
+    : days;
+
+  if (stepsWeek.length) drawSHChart('shStepsChart', stepsWeek, labels7, '#86efac', '#4ade80', 'Steps');
+  if (hrWeek.length)    drawSHChart('shHRChart',    hrWeek,    labels7, '#f9a8d4', '#f472b6', 'bpm');
+  if (sleepWeek.length) drawSHChart('shSleepChart', sleepWeek, labels7, '#a5f3fc', '#7dd3fc', 'hrs');
+
+  // ── INSIGHTS ──
+  renderSHInsights(latestSteps, latestHR, latestSleep, latestCal);
+}
+
+function drawSHChart(canvasId, data, labels, col1, col2, unit) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas || !data.length) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth || 300;
+  canvas.width = W; canvas.height = parseInt(canvas.height) || 100;
+  const H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#fdf2f8'; ctx.fillRect(0,0,W,H);
+  const vals = data.map(v=>parseFloat(v)||0);
+  const mn = Math.min(...vals)*0.9, mx = Math.max(...vals)*1.05 || 1;
+  const n = vals.length;
+  const pad = 28;
+
+  // Grid
+  for(let i=0;i<=3;i++){const y=8+i*((H-20)/3);ctx.beginPath();ctx.strokeStyle='rgba(255,179,206,.3)';ctx.lineWidth=1;ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+  // Line
+  ctx.beginPath(); ctx.strokeStyle=col2; ctx.lineWidth=2.5; ctx.lineJoin='round';
+  vals.forEach((v,i)=>{const x=pad+(i/(n-1||1))*(W-pad*2);const y=8+((mx-v)/(mx-mn||1))*(H-28);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.stroke();
+
+  // Fill under
+  ctx.beginPath();
+  vals.forEach((v,i)=>{const x=pad+(i/(n-1||1))*(W-pad*2);const y=8+((mx-v)/(mx-mn||1))*(H-28);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.lineTo(pad+(n-1)/(n-1||1)*(W-pad*2),H-20); ctx.lineTo(pad,H-20); ctx.closePath();
+  ctx.fillStyle=col1+'44'; ctx.fill();
+
+  // Dots + labels
+  vals.forEach((v,i)=>{
+    const x=pad+(i/(n-1||1))*(W-pad*2);const y=8+((mx-v)/(mx-mn||1))*(H-28);
+    ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fillStyle=col2;ctx.fill();
+    ctx.fillStyle='#888';ctx.font='8px Nunito,sans-serif';ctx.textAlign='center';
+    if(labels[i]) ctx.fillText(labels[i],x,H-6);
+    if(v) ctx.fillText(Math.round(v),x,y-7);
+  });
+}
+
+function renderSHInsights(steps, hr, sleep, cal) {
+  const el = document.getElementById('shInsights');
+  if (!el) return;
+  const insights = [];
+  if (steps !== null) {
+    if (steps >= 8000) insights.push({type:'good', icon:'👟', txt:`Great job! ${steps.toLocaleString()} steps today — you hit your goal! 🎉`});
+    else if (steps >= 5000) insights.push({type:'warn', icon:'👟', txt:`${steps.toLocaleString()} steps today — try to hit 8,000 for best weight loss results.`});
+    else if (steps > 0) insights.push({type:'warn', icon:'👟', txt:`Only ${steps.toLocaleString()} steps today. Even a 20-min walk helps! 🚶`});
+  }
+  if (hr !== null) {
+    if (hr < 60) insights.push({type:'good', icon:'❤️', txt:`Resting HR of ${hr} bpm — excellent cardiovascular fitness!`});
+    else if (hr <= 80) insights.push({type:'good', icon:'❤️', txt:`Heart rate ${hr} bpm — healthy and normal range. 🌸`});
+    else insights.push({type:'warn', icon:'❤️', txt:`Heart rate ${hr} bpm is slightly elevated. Hydrate and rest today.`});
+  }
+  if (sleep !== null) {
+    const h = parseFloat(sleep);
+    if (h >= 8) insights.push({type:'good', icon:'😴', txt:`${sleep}hrs sleep — perfect! Well-rested body burns fat more efficiently.`});
+    else if (h >= 7) insights.push({type:'good', icon:'😴', txt:`${sleep}hrs sleep — good! Try for 8hrs for optimal postpartum recovery.`});
+    else insights.push({type:'warn', icon:'😴', txt:`Only ${sleep}hrs sleep. Poor sleep slows weight loss. Rest is part of the journey! 🌸`});
+  }
+  if (cal !== null) {
+    if (cal >= 400) insights.push({type:'good', icon:'🔥', txt:`${Math.round(cal)} calories burned — great activity level today!`});
+    else if (cal > 0) insights.push({type:'info', icon:'🔥', txt:`${Math.round(cal)} kcal burned. A 20-min walk adds ~100 more kcal!`});
+  }
+  if (!insights.length) {
+    insights.push({type:'info', icon:'🌸', txt:'Import your Samsung Health data above to see personalized insights based on your Galaxy Watch!'});
+  }
+  el.innerHTML = '<div style="font-weight:800;font-size:.78rem;color:var(--mid);margin-bottom:8px">💡 Personalized Insights</div>' +
+    insights.map(i=>`<div class="sh-insight ${i.type}"><span style="font-size:1.1rem">${i.icon}</span><span>${i.txt}</span></div>`).join('');
+}
+
+// ── MANUAL ENTRY ──
+function saveManualSH() {
+  const steps = parseInt(document.getElementById('manSteps').value)||null;
+  const hr    = parseInt(document.getElementById('manHR').value)||null;
+  const cal   = parseInt(document.getElementById('manCal').value)||null;
+  const sleep = parseFloat(document.getElementById('manSleep').value)||null;
+  const weight= parseFloat(document.getElementById('manWeight').value)||null;
+  const date  = document.getElementById('manDate').value || new Date().toISOString().split('T')[0];
+
+  if (!steps && !hr && !cal && !sleep && !weight) { toast('Please enter at least one value! 🌸'); return; }
+
+  const entry = { date, steps, hr, cal, calories:cal, sleep, weight };
+  shHistory.push(entry);
+  localStorage.setItem('shHistory', JSON.stringify(shHistory));
+
+  // Auto-log weight to weight tracker
+  if (weight) {
+    const exists = weightLog.find(e=>e.date===date);
+    if (!exists) { weightLog.push({date,val:weight,note:'📲 From Samsung Health'}); weightLog.sort((a,b)=>a.date>b.date?1:-1); renderWeightHistory(); setTimeout(drawWeightChart,100); saveState(); }
+  }
+
+  // Clear fields
+  ['manSteps','manHR','manCal','manSleep','manWeight'].forEach(id=>{document.getElementById(id).value='';});
+
+  renderSHDashboard();
+  renderSHHistory();
+  toast('⌚ Samsung Health entry saved! 🌸');
+}
+
+function renderSHHistory() {
+  const el = document.getElementById('shHistoryTable');
+  if (!el) return;
+  const allData = [...shHistory].sort((a,b)=>b.date>a.date?1:-1);
+  if (!allData.length) {
+    el.innerHTML = '<div style="font-size:.82rem;color:var(--light);text-align:center;padding:14px">No history yet. Import or manually log data above! 🌸</div>';
+    return;
+  }
+  el.innerHTML = `
+    <div class="sh-history-row header">
+      <span>Date</span><span>👟 Steps</span><span>❤️ HR</span><span>🔥 Cal</span><span>😴 Sleep</span><span>⚖️ kg</span>
+    </div>` +
+    allData.slice(0,14).map(r=>`
+    <div class="sh-history-row">
+      <span style="color:var(--mid);font-weight:700">${r.date||'—'}</span>
+      <span>${r.steps?r.steps.toLocaleString():'—'}</span>
+      <span>${r.hr||'—'}</span>
+      <span>${r.calories||r.cal||'—'}</span>
+      <span>${r.sleep?r.sleep+'h':'—'}</span>
+      <span>${r.weight?r.weight+'kg':'—'}</span>
+    </div>`).join('');
+}
+
+// Load SH data when Samsung tab opens
+document.querySelector('[onclick*="samsungTab"]')?.addEventListener('click', ()=>{
+  setTimeout(()=>{ renderSHDashboard(); renderSHHistory(); }, 100);
+});
+</script>
+</body>
+</html>
